@@ -1,0 +1,35 @@
+﻿@using Umbraco.Extensions
+@using Umbraco.Community.BlockPreview.Extensions
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<Umbraco.Cms.Core.Models.Blocks.BlockGridItem>
+
+@{
+    var leftArea = Model.Areas.FirstOrDefault(x => x.Alias == "left");
+    var rightArea = Model.Areas.FirstOrDefault(x => x.Alias == "right");
+    var settings = Model.Settings as LayoutBlockSettings;
+    var containerClass = settings.FullWidth ? "container-fluid" : "container";
+    var backgroundColor = !string.IsNullOrWhiteSpace(settings.BackgroundColor) ? settings.BackgroundColor : "white";
+    var disableAnimation = settings.DisableAnimation;
+}
+
+
+<section class="lg-pb-40px md-pb-20px pb-4 pt-0" style="background-color: @backgroundColor"> 
+	<div class="@containerClass">
+        <div class="row">
+
+            @if (Context.Request.IsBlockPreviewRequest())
+            {
+                @await Html.GetPreviewBlockGridItemAreasHtmlAsync(Model)
+            }
+            else
+            {
+                <div class="col-lg-6 col-md-10 md-mb-10 sm-mb-5" @if(!disableAnimation) { <text>data-anime='{"opacity": [0,1], "duration": 600, "delay": 0, "staggervalue": 200, "easing": "easeOutQuad" }'</text> }> 
+                    @await Html.GetPreviewBlockGridItemsHtmlAsync(leftArea)
+                </div> 
+                <div class="col-xl-5 offset-xl-1 col-lg-6 col-md-10" @if(!disableAnimation) { <text>data-anime='{ "el": "childs", "translateY": [50, 0], "opacity": [0,1], "duration": 1200, "delay": 0, "staggervalue": 150, "easing": "easeOutQuad" }'</text> }> 
+                    @await Html.GetPreviewBlockGridItemsHtmlAsync(rightArea)
+                </div> 
+            }
+		</div>
+	</div>
+</section>
+

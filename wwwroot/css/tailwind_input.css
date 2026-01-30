@@ -1,0 +1,68 @@
+@import 'tailwindcss' prefix(tw);
+
+@config '../../tailwind.config.js';
+
+/*
+  The default border color has changed to `currentColor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+}
+
+@theme {
+  /* Primary Colors */
+
+  --color-primary-50: oklch(96.6% 0.012 281.17);
+  --color-primary-100: oklch(93.25% 0.024 283.42);
+  --color-primary-200: oklch(86.37% 0.05 281.56);
+  --color-primary-300: oklch(79.71% 0.075 280.35);
+  --color-primary-400: oklch(73.02% 0.102 279.17);
+  --color-primary-500: oklch(66.27% 0.129 277.29);
+  --color-primary-600: oklch(59.54% 0.156 275.22);
+  --color-primary-700: oklch(52.79% 0.18 272.44);
+  --color-primary-800: oklch(46.06% 0.17 270.9);
+  --color-primary-900: oklch(38.88% 0.144 271.12);
+  --color-primary-950: oklch(26.51% 0.098 270.89);
+  
+  --color-secondary-50: #f1f1f1;
+  --color-secondary-100: #e5e5e5;
+  --color-secondary-200: #cccccc;
+  --color-secondary-300: #b2b2b2;
+  --color-secondary-400: #969696;
+  --color-secondary-500: #7c7c7c;
+  --color-secondary-600: #616161;
+  --color-secondary-700: #494949;
+  --color-secondary-800: #323232;
+  --color-secondary-900: #1b1b1b;
+  --color-secondary-950: #111111;
+  /* Accent Color */
+  --color-accent: #fe5202;
+
+  /* Dark Gray Colors */
+  --color-darkGray-100: #d3d4d9;
+  --color-darkGray-200: #a8a9b3;
+  --color-darkGray-300: #7c7e8c;
+  --color-darkGray-400: #515366;
+  --color-darkGray-500: #252840;
+  --color-darkGray-600: #1e2033;
+  --color-darkGray-700: #161826;
+  --color-darkGray-800: #0f101a;
+  --color-darkGray-900: #07080d;
+}
+
+@layer rte {
+    .rteH5{
+        @apply tw:font-bold tw:mb-1 tw:text-darkGray-500 tw:text-lg;
+    }
+  }

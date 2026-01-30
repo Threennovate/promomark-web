@@ -1,0 +1,89 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<Brands>
+@{
+	Layout = "Master.cshtml";
+
+    var brands = Model.Descendants<Brand>().ToList();
+    var brandCategories = Model.Children<Brands>().ToList();
+    var titleImageUrl = Model.TitleImage?.GetCropUrl("titleImage");
+    if(string.IsNullOrEmpty(titleImageUrl))
+    {
+        titleImageUrl = "/images/promomark_bg_02.jpeg";
+    }
+}
+
+<!-- start page title -->
+<section class="top-space-margin position-relative page-title-big-typography cover-background pt-0 pb-0" style="background-image: url(@titleImageUrl)">
+    <div class="container position-relative tw:z-30">
+        <div class="row align-items-center justify-content-center small-screen">
+            <div class="col-xl-5 col-sm-8 page-title-double-large text-center" data-anime='{ "el": "childs", "opacity": [0, 1], "translateY": [30, 0], "duration": 600, "staggervalue": 300, "easing": "easeOutQuad" }'>
+                <h1 class="text-white fw-700 mb-5px">@Model.Title</h1>
+                <h2 class="text-white fw-600 ls-1px mb-0 text-uppercase">@Model.Subtitle</h2>
+            </div>
+        </div>
+    </div>
+    <div class="tw:h-full tw:w-full tw:absolute tw:top-0 tw:left-0 tw:bg-gradient-to-r tw:from-[#09172e]/70 tw:via-[#05447a]/50 tw:to-[#2CDED0]/5 tw:z-20"></div>
+</section>
+<!-- end page title -->
+<!-- start section -->
+<section class="overflow-hidden bg-gradient-very-light-gray">
+    @if(brandCategories.Count > 0)
+    {
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <!-- filter navigation -->
+                    <ul class="portfolio-filter nav nav-tabs justify-content-center border-0 fw-500 alt-font pb-5">
+                        <li class="nav active"><a data-filter="*" href="#">Sve</a></li>
+                        @foreach(var brandCategory in brandCategories)
+                        {
+                            <li class="nav"><a data-filter=".@brandCategory.Id" href="#">@brandCategory.Name</a></li>
+                        }
+                    </ul>
+                    <!-- end filter navigation -->
+                </div>
+            </div>
+        </div>
+    }
+    <div class="container">
+        <div class="row">
+            <div class="col-12 filter-content">
+                <ul class="portfolio-modern portfolio-wrapper grid-loading grid grid-4col xxl-grid-4col xl-grid-4col lg-grid-4col md-grid-2col sm-grid-2col xs-grid-1col gutter-large text-center">
+                    <li class="grid-sizer"></li>
+                    @foreach(var brand in brands)
+                    {
+                        var brandCategory = brand.Parent<Brands>();
+                        <!-- start portfolio item -->
+                        <li class="grid-item grid-item-double @brandCategory.Id transition-inner-all">
+                            <a href="@brand.Url()">
+                                <div class="portfolio-box">
+                                    <div class="portfolio-image border-radius-4px">
+                                        <img src="@brand.HighlightImage.Url()" alt="" />
+                                    </div>
+                                    <div class="portfolio-overlay tw:bg-gradient-to-tr tw:from-[#1D468D]/10 tw:via-[#087EE3]/10 tw:to-[#2CDED0]/10 tw:backdrop-blur-xs">
+                                        <div class="tw:h-full tw:w-full tw:flex tw:flex-col tw:items-center tw:justify-center tw:px-[15%]">
+                                            <div class="tw:h-[120px] tw:min-w-[50%] tw:flex tw-items-center tw:justify-center tw:bg-white tw:px-8 tw:py-6 tw:rounded-xl tw:shadow-lg">
+                                                <img class="tw:max-h-full tw:w-auto tw:max-w-full tw:object-contain" src="@brand.Logo.Url()" alt="" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="portfolio-hover box-shadow-extra-large">
+                                        <div class="bg-white d-flex align-items-center align-self-end text-start border-radius-4px ps-30px pe-30px pt-20px pb-20px lg-p-20px w-100">
+                                            <div class="me-auto">
+                                                <div class="fs-12 text-medium-gray text-uppercase lh-24">@brandCategory.Name</div>
+                                                <div class="alt-font fw-600 text-dark-gray text-uppercase lh-initial">@brand.Name</div>
+                                            </div>
+                                            <div class="ms-auto"><i class="feather icon-feather-plus icon-extra-medium text-dark-gray lh-36"></i></div> 
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <!-- end portfolio item -->
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- end section -->

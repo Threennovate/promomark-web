@@ -1,0 +1,8 @@
+﻿@using Umbraco.Extensions
+@using Umbraco.Community.BlockPreview.Extensions
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<Umbraco.Cms.Core.Models.Blocks.BlockGridModel>
+@{
+    if (Model?.Any() != true) { return; }
+}
+
+@await Html.GetPreviewBlockGridItemsHtmlAsync(Model)

@@ -1,0 +1,88 @@
+@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<Master>
+@{
+
+	var homePage = Model.AncestorOrSelf<HomePage>();
+
+    var brandsPage = homePage.Children<Brands>().FirstOrDefault();
+
+    var otherPages = homePage.Children<Master>().Where(x => x.IsVisible()).ToList(); 
+}
+<!-- start header -->
+<header>
+    <!-- start navigation -->
+    <nav class="navbar navbar-expand-lg header-light bg-white border-bottom border-color-extra-medium-gray header-reverse" data-header-hover="light">
+        <div class="container-fluid"> 
+            <div class="col-auto">
+                <a class="navbar-brand" href="@homePage.Url()">
+                    <img src="~/images/logo/promomark-logo.svg?v2" alt="" class="default-logo">
+                    <img src="~/images/logo/promomark-logo.svg?v2" alt="" class="alt-logo">
+                    <img src="~/images/logo/promomark-logo.svg?v2" alt="" class="mobile-logo">
+                </a>
+            </div>
+            <div class="col-auto menu-order left-nav ps-60px lg-ps-20px">
+                <button class="navbar-toggler float-start" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-line"></span>
+                    <span class="navbar-toggler-line"></span>
+                    <span class="navbar-toggler-line"></span>
+                    <span class="navbar-toggler-line"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+                    <ul class="navbar-nav alt-font">
+                        <li class="nav-item"><a href="@homePage.Url()" class="nav-link @Html.Raw(Model.Id == homePage.Id ? "active" : "")">Naslovnica</a></li> 
+                        @foreach (var childPage in otherPages)
+                        {
+                            if(childPage is Brands)
+                            {
+                                var grandchildren = childPage.Children<Brands>().ToList();
+                                var hasActiveChild = grandchildren.Any(x => x.Id == Model.Id);
+                                <li class="nav-item dropdown dropdown-with-icon">
+                                    <a href="@childPage.Url()" class="nav-link @Html.Raw(Model.Id == childPage.Id || hasActiveChild ? "active" : "")">@childPage.Name</a>
+                                    <i class="fa-solid fa-angle-down dropdown-toggle" id="navbarDropdownMenuLink-@childPage.Id" role="button" data-bs-toggle="dropdown" aria-expanded="false"></i>
+                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink-@childPage.Id">
+                                        @foreach (var grandchild in grandchildren)
+                                        {
+                                            <li>
+                                                <a href="@grandchild.Url()">
+                                                    <div class="submenu-icon-content">
+                                                        <span>@grandchild.Name</span>
+                                                        @if(Model.Id == grandchild.Id)
+                                                        {
+                                                            <span class="tw:ml-2 tw:inline-block tw:h-2 tw:w-2 tw:rounded-full bg-base-color tw:opacity-40" aria-hidden="true"></span>
+                                                        }
+                                                    </div>
+                                                </a>
+                                            </li>
+                                        }
+                                    </ul>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="nav-item"><a href="@childPage.Url()" class="nav-link @Html.Raw(Model.Id == childPage.Id ? "active" : "")">@childPage.Name</a></li>
+                            }
+                        }
+                    </ul>
+                </div>
+            </div>
+            <div class="col-auto ms-auto ps-lg-0 d-none d-sm-flex"> 
+                @* <div class="d-none d-xl-flex me-25px">
+                    <div class="d-flex align-items-center widget-text fw-600 alt-font"><a href="tel:@homePage.ContactPhone.Replace(" ", "")" class="d-inline-block"><span class="d-inline-block align-middle me-10px bg-base-color-transparent h-45px w-45px text-center rounded-circle fs-16 lh-46 text-base-color"><i class="feather icon-feather-phone-outgoing"></i></span><span class="d-none d-xxl-inline-block">@homePage.ContactPhone</span></a></div>
+                </div>
+                <div class="header-icon">
+                    <div class="header-button">
+                        <a href="@projectsPage?.Url()" class="btn btn-base-color btn-small btn-round-edge btn-hover-animation-switch">
+                            <span> 
+                                <span class="btn-text">Pogledajte projekte</span> 
+                                <span class="btn-icon"><i class="feather icon-feather-arrow-right icon-very-small"></i></span>
+                                <span class="btn-icon"><i class="feather icon-feather-arrow-right icon-very-small"></i></span>
+                            </span>
+                        </a>
+                    </div>
+                </div> *@
+            </div>
+        </div>
+    </nav>
+    <!-- end navigation -->
+</header>
+<!-- end header -->

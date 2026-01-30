@@ -1,0 +1,82 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<Brand>
+@{
+	Layout = "Master.cshtml";
+    var titleImageUrl = Model.TitleImage?.GetCropUrl("titleImage");
+    if(string.IsNullOrEmpty(titleImageUrl))
+    {
+        titleImageUrl = "/images/promomark_bg_02.jpeg";
+    }
+
+	var homePage = Model.Ancestor<HomePage>();
+
+	var brandsPage = homePage.Children<Brands>().FirstOrDefault();
+	var siblingBrands = Model.Siblings<Brand>().ToList();
+	var brandCategories = brandsPage.Children<Brands>().ToList();
+}
+
+<!-- start page title -->
+<section class="top-space-margin position-relative page-title-big-typography cover-background pt-0 pb-0" style="background-image: url(@titleImageUrl)">
+    <div class="container position-relative tw:z-30">
+        <div class="row align-items-center justify-content-center small-screen">
+            <div class="col-xl-5 col-sm-8 page-title-double-large text-center" data-anime='{ "el": "childs", "opacity": [0, 1], "translateY": [30, 0], "duration": 600, "staggervalue": 300, "easing": "easeOutQuad" }'>
+                <h1 class="text-white fw-700 mb-5px">@Model.Title</h1>
+                <h2 class="text-white fw-600 ls-1px mb-0 text-uppercase">@Model.Subtitle</h2>
+            </div>
+        </div>
+    </div>
+    <div class="tw:h-full tw:w-full tw:absolute tw:top-0 tw:left-0 tw:bg-gradient-to-r tw:from-[#09172e]/70 tw:via-[#05447a]/50 tw:to-[#2CDED0]/5 tw:z-20"></div>
+</section>
+<!-- end page title -->
+<!-- start section -->  
+<section>
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-4 pe-5 order-2 order-lg-1 lg-pe-3 md-pe-15px" data-anime='{ "el": "childs", "translateY": [50, 0], "opacity": [0,1], "duration": 1200, "delay": 0, "staggervalue": 150, "easing": "easeOutQuad" }'>
+				<div class="bg-very-light-gray border-radius-6px p-45px lg-p-25px mb-25px">
+					@if(siblingBrands.Count > 0)
+					{
+						<span class="fs-22 text-dark-gray fw-600 mb-20px d-inline-block">Ostali brendovi</span>
+					}
+					else
+					{
+						<span class="fs-22 text-dark-gray fw-600 mb-20px d-inline-block">Iz naše ponude</span>
+					}
+					<ul class="p-0 m-0 list-style-02 fw-500">
+						@if(siblingBrands.Count > 0)
+						{
+							foreach(var brand in siblingBrands)
+							{
+								<li class="pb-5px mb-10px border-bottom border-color-transparent-dark"><a href="@brand.Url()">@brand.Name</a><i class="feather icon-feather-arrow-right ms-auto icon-small"></i></li>
+							}
+						}
+						else
+						{
+							foreach(var brandCategory in brandCategories)
+							{
+								<li class="pb-5px mb-10px border-bottom border-color-transparent-dark"><a href="@brandCategory.Url()">@brandCategory.Name</a><i class="feather icon-feather-arrow-right ms-auto icon-small"></i></li>
+							}
+						}
+					</ul>
+				</div>
+				<div class="bg-base-color border-radius-6px ps-35px pb-25px pt-25px lg-ps-25px mb-25px">
+					<div class="feature-box feature-box-left-icon-middle">
+						<div class="feature-box-icon feature-box-icon-rounded w-65px h-65px me-20px lg-me-15px rounded-circle bg-white">
+							<i class="bi bi-send icon-extra-medium text-dark-gray"></i>
+						</div>
+						<div class="feature-box-content last-paragraph-no-margin">
+							<span class="d-block text-dark-gray">Imate pitanja?</span>
+							<a href="mailto:@homePage.ContactEmail" class="text-dark-gray fs-20 fw-700">@homePage.ContactEmail</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-8 order-1 order-lg-2 md-mb-50px" data-anime='{ "el": "childs", "translateY": [50, 0], "opacity": [0,1], "duration": 1200, "delay": 0, "staggervalue": 150, "easing": "easeOutQuad" }'>
+				<div class="text-dark-gray custom-grid-content">
+					@await Html.GetBlockGridHtmlAsync(Model.Grid)
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- end section -->

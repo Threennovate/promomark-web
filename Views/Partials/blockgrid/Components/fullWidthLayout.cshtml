@@ -1,0 +1,33 @@
+﻿@using Umbraco.Extensions
+@using Umbraco.Community.BlockPreview.Extensions
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<Umbraco.Cms.Core.Models.Blocks.BlockGridItem>
+
+@{
+    var gridSection = Model.Content as FullWidthLayout;
+
+    var settings = Model.Settings as LayoutBlockSettings;
+    var containerClass = settings.FullWidth ? "container-fluid" : "container";
+    @* var backgroundColor = !string.IsNullOrWhiteSpace(settings.BackgroundColor) ? settings.BackgroundColor : "white"; *@
+
+    var disableAnimation = settings.DisableAnimation;
+
+    var additionalStyles = "";
+    if(!string.IsNullOrWhiteSpace(settings.PaddingTop))
+    {
+        additionalStyles += $"padding-top: {settings.PaddingTop.Replace("px", "")}px !important;";
+    }
+    if(!string.IsNullOrWhiteSpace(settings.PaddingBottom))
+    {
+        additionalStyles += $"padding-bottom: {settings.PaddingBottom.Replace("px", "")}px !important;";
+    }
+}
+
+<section class="lg-pb-40px md-pb-20px pb-3 pt-0" style="@additionalStyles"> 
+	<div class="@containerClass">
+        <div class="row">
+			<div class="col-12" @if(!disableAnimation) { <text>data-anime='{"opacity": [0,1], "duration": 600, "delay": 0, "staggervalue": 200, "easing": "easeOutQuad" }'</text> }>
+                @await Html.GetPreviewBlockGridItemAreasHtmlAsync(Model)
+			</div>
+		</div>
+	</div>
+</section>

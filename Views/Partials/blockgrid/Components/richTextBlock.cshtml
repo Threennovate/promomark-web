@@ -1,0 +1,28 @@
+﻿@using Umbraco.Extensions
+@using Umbraco.Community.BlockPreview.Extensions
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<Umbraco.Cms.Core.Models.Blocks.BlockGridItem>
+
+@{
+    var richText = Model.Content as RichTextBlock;
+}
+
+<div style="padding: 20px 0px" class="rich-text-block">
+    @if (Context.Request.IsBlockPreviewRequest())
+    {
+        if(richText == null || string.IsNullOrEmpty(richText.Text.ToString()))
+        {
+            <div style="background-color: #f5f5f5; padding: 20px; border-radius: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center">
+                <div style="color: #999; font-weight: bold; margin-bottom: 10px;">Rich Text Block</div>
+                <div style="color: #999;">- No content -</div>
+            </div>
+        }
+        else
+        {
+            @Html.Raw(richText.Text)
+        }
+    }
+    else
+    {
+        @Html.Raw(richText.Text)
+    }
+</div>

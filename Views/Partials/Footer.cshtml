@@ -1,0 +1,60 @@
+@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<Master>
+@{
+
+	var homePage = Model.AncestorOrSelf<HomePage>();
+    var otherPages = homePage.Children<Master>().Where(x => x.IsVisible()).ToList(); 
+}
+<footer class="footer-light bg-gradient-very-light-gray pb-0 pt-0">
+    <div class="container position-relative pb-3 pt-3 md-mb-15px">
+        <div class="position-absolute left-0px top-0px background-no-repeat background-size-100 h-100 w-100 animation-float" style="background-image: url('https://via.placeholder.com/1190x262')"></div>
+    </div>
+    <div class="container">
+        <div class="row align-items-center justify-content-center">
+            <!-- start footer column -->
+            <div class="col-auto d-flex flex-column flex-md-row align-items-center text-center text-md-start">
+                <div class="text-dark-gray fs-28 alt-font fw-500"> <span class="fw-700 text-decoration-line-bottom">10+ godina iskustva.</span> 100% pokrivenost hrvatskog maloprodajnog tržišta.</div>
+            </div>
+            <!-- end footer column -->
+        </div>
+        <div class="row justify-content-center mt-5 mb-4 sm-mb-35px">
+            <!-- start footer column -->
+            <div class="col-lg-5 last-paragraph-no-margin md-mb-35px text-center text-lg-start">
+                <a href="@homePage.Url()" class="footer-logo mb-10px d-inline-block">
+                    <img src="~/images/logo/promomark-logo.svg?v2" alt="" class="w-100">
+                </a>
+                <p class="w-85 lg-w-100">Vaš strateški partner za ulazak na police vodećih trgovačkih lanaca. Spajamo vrhunske svjetske brendove s domaćim tržištem kroz pouzdanu distribucijsku mrežu.</p>
+            </div>
+            <!-- end footer column -->
+            <!-- start footer column -->
+            <div class="col-6 col-lg-4 col-md-3 sm-mb-25px">
+                <span class="alt-font fs-18 fw-600 d-block text-dark-gray mb-5px">Navigacija</span>
+                <ul>
+                    <li ><a href="@homePage.Url()">@homePage.Name</a></li> 
+                    @foreach (var childPage in otherPages)
+                    {
+                        <li><a href="@childPage.Url()">@childPage.Name</a></li>
+                    }
+                </ul>
+            </div>
+            <!-- end footer column -->
+            <!-- start footer column -->
+            <div class="col-6 col-lg-3 col-md-3">
+                <span class="alt-font fs-18 fw-600 d-block text-dark-gray mb-10px">Javite nam se</span>
+                <span class="d-block lh-normal">E-mail:</span>
+                <a href="mailto:@homePage.ContactEmail" class="text-dark-gray text-decoration-line-bottom lh-22 d-inline-block mb-20px">@homePage.ContactEmail</a>
+                @if(!string.IsNullOrEmpty(homePage.ContactPhone))
+                {
+                    <span class="d-block lh-normal">Telefon:</span>
+                    <a href="tel:@homePage.ContactPhone" class="text-dark-gray text-decoration-line-bottom lh-22 d-inline-block">@homePage.ContactPhone</a>
+                }
+            </div>
+            <!-- end footer column -->                     
+        </div>
+        @* <!-- start footer content -->
+        <div class="border-top border-color-extra-medium-gray pt-35px pb-35px text-center">
+            <span class="fs-13 w-60 lg-w-70 md-w-90 sm-w-100 d-block mx-auto lh-22">This site is protected by reCAPTCHA and the Google <a href="#" class="text-dark-gray text-decoration-line-bottom">privacy policy</a> and <a href="#" class="text-dark-gray text-decoration-line-bottom">terms of service</a> apply. You must not use this website if you disagree with any of these website standard terms and conditions.</span>
+        </div>
+        <!-- end footer content --> *@
+    </div> 
+</footer>

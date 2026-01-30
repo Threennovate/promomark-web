@@ -1,0 +1,45 @@
+﻿@using Umbraco.Extensions
+@using Umbraco.Community.BlockPreview.Extensions
+@using PromomarkWeb.Helpers;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<Umbraco.Cms.Core.Models.Blocks.BlockGridItem>
+
+@{
+    var callToActionBlock = Model.Content as CallToActionBlock;
+
+    var hasTitleOrSubtitle = !string.IsNullOrEmpty(callToActionBlock.Title.ToString()) || !string.IsNullOrEmpty(callToActionBlock.Subtitle.ToString());
+    var rowClass = hasTitleOrSubtitle ? "align-items-center justify-content-center" : "justify-content-start";
+    var buttonColClass = hasTitleOrSubtitle ? "col-xl-6 text-center" : "col-xl-9 text-center text-xl-start lg-mb-30px";
+}
+
+@if (Context.Request.IsBlockPreviewRequest())
+{
+    if(string.IsNullOrEmpty(callToActionBlock.Title.ToString()) && string.IsNullOrEmpty(callToActionBlock.Subtitle.ToString()) && string.IsNullOrEmpty(callToActionBlock.ButtonText))
+    {
+        <div style="background-color: #f5f5f5; padding: 20px; border-radius: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center">
+            <div style="color: #999; font-weight: bold; margin-bottom: 10px;">Call To Action Block</div>
+            <div style="color: #999;">- No content -</div>
+        </div>
+        return;
+    }
+}
+
+<div class="cover-background p-7 border-radius-6px mb-60px md-mb-40px d-flex justify-content-end align-items-end sm-h-500px" style="background-image: url(@callToActionBlock.BackgroundImage?.GetCropUrl("ctaImage"))">
+    <div class="bg-white box-shadow-quadruple-large border-radius-4px w-50 lg-w-55 sm-w-100 overflow-hidden">
+        <div class="p-40px lg-p-25px last-paragraph-no-margin">
+            <span class="fs-22 text-dark-gray fw-700 mb-10px d-block">@callToActionBlock.Title</span>
+            <p>@callToActionBlock.Subtitle.RemoveOuterPTags()</p>
+        </div>
+        <div class="bg-base-color p-15px text-center">
+            <a href="@callToActionBlock.ButtonLink?.Url" class="btn btn-link btn-hover-animation-switch btn-large text-white text-transform-none xs-mt-10"
+                @if (!string.IsNullOrEmpty(callToActionBlock.ButtonLink?.Target)) { <text>target="@callToActionBlock.ButtonLink.Target"</text> }>
+                <span>
+                    <span class="btn-text fs-18">@callToActionBlock.ButtonText</span>
+                    <span class="btn-icon"><i class="feather icon-feather-arrow-right"></i></span>
+                    <span class="btn-icon"><i class="feather icon-feather-arrow-right"></i></span>
+                </span> 
+            </a>
+        </div>
+    </div>
+</div>
+
+

@@ -1,0 +1,106 @@
+@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<ContactPage>
+@inject Microsoft.Extensions.Options.IOptions<PromomaxWeb.Options.GoogleRecaptchaOptions> RecaptchaOptions
+@{
+	Layout = "Master.cshtml";
+
+	var homePage = Model.AncestorOrSelf<HomePage>();
+}
+
+
+<section class="cover-background page-title-big-typography ipad-top-space-margin">
+	<div class="container">
+		<div class="row align-items-center align-items-lg-end justify-content-center extra-very-small-screen g-0">
+			<div class="col-xxl-5 col-xl-6 col-lg-7 position-relative page-title-extra-small md-mb-30px md-mt-auto" data-anime='{ "el": "childs", "translateY": [30, 0], "opacity": [0,1], "duration": 600, "delay": 0, "staggervalue": 300, "easing": "easeOutQuad" }'>
+				<h1 class="text-base-color">Započnimo suradnju</h1>
+				<h2 class="alt-font text-dark-gray fw-500 mb-0 ls-minus-1px shadow-none" data-shadow-animation="true" data-animation-delay="700">Spremni za idući korak? <span class="fw-700 text-highlight d-inline-block">Postanite partner.<span class="bg-base-color h-10px bottom-10px opacity-3 separator-animation"></span></span></h2>
+			</div>
+			<div class="col-lg-5 offset-xxl-1 offset-xl-1 tw:border-l-2 border-color-base-color ps-40px sm-ps-25px md-mb-auto">
+				<span class="d-block w-85 lg-w-100" data-anime='{ "el": "lines", "translateY": [15, 0], "opacity": [0,1], "duration": 600, "delay": 0, "staggervalue": 300, "easing": "easeOutQuad" }'>Povezujemo vrhunske brendove s vodećim trgovačkim lancima. Ispunite formu ili nas kontaktirajte direktno kako bismo pronašli najbolje rješenje za vas.</span>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- end page title -->
+<!-- start section -->
+<section class="overflow-hidden p-0">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-12 p-0 position-relative">
+				<img src="@Model.TitleImage.GetCropUrl("titleImage")" alt="" class="w-100">
+				<div class="alt-font fw-600 fs-350 lg-fs-275 md-fs-250 sm-fs-200 xs-fs-140 ls-minus-5px xs-ls-minus-2px position-absolute right-minus-50px lg-right-minus-0px bottom-minus-80px md-bottom-minus-60px xs-bottom-minus-40px text-white text-outline text-outline-width-3px" data-bottom-top="transform: translate3d(80px, 0px, 0px);" data-top-bottom="transform: translate3d(-280px, 0px, 0px);">Kontakt</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- end section -->
+<!-- start section -->  
+<section class="pt-0">
+	<div class="container">
+		<div class="row justify-content-center align-items-center" data-anime='{ "el": "childs", "opacity": [0,1], "duration": 600, "delay": 0, "staggervalue": 300, "easing": "easeOutQuad" }'> 
+			<div class="col-lg-6 pt-8 pb-8 text-center text-sm-start"> 
+				<h6 class="alt-font fw-700 text-dark-gray mb-15px">Promomark d.o.o.</h6>
+				<div class="row row-cols-1 row-cols-sm-2 mb-10">
+					<div class="col last-paragraph-no-margin xs-mb-20px">
+						<span class="fs-18 alt-font fw-600 d-block text-dark-gray mb-5px">Adresa</span>
+						<p class="w-80 lg-w-100">Bednjanska 10 A,<br> Zagreb</p>
+					</div>
+					<div class="col">
+						<span class="fs-18 alt-font fw-600 d-block text-dark-gray mb-5px">Kontaktirajte nas</span>
+						<a href="tel:@homePage.ContactPhone.Replace(" ", "")">@homePage.ContactPhone</a><br>
+						<a href="mailto:@homePage.ContactEmail" class="text-decoration-line-bottom text-dark-gray">@homePage.ContactEmail</a>
+					</div>
+				</div>
+			</div> 
+			<div class="col-lg-6 align-self-start contact-form-style-03 position-relative"> 
+				<div class="bg-white box-shadow-double-large p-12 lg-p-9 border-radius-10px">
+					<h3 class="fw-700 alt-font text-dark-gray mb-30px sm-mb-20px">Javite nam se!</h3>
+					@if (TempData["contactSuccess"] as string == "true")
+                    {
+                        <div class="alert alert-success mb-20px" role="alert">
+                            Vaša poruka je poslana. Hvala!
+                        </div>
+                    }
+                    @{
+                        var _hasForm = Context?.Request?.HasFormContentType == true;
+                        var _valName = _hasForm ? (string)Context!.Request!.Form["Name"] : string.Empty;
+                        var _valEmail = _hasForm ? (string)Context!.Request!.Form["Email"] : string.Empty;
+                        var _valMessage = _hasForm ? (string)Context!.Request!.Form["Message"] : string.Empty;
+                    }
+					@using (Html.BeginUmbracoForm("Submit", "ContactSurface"))
+					{
+						@Html.AntiForgeryToken()
+						<input type="hidden" name="g-recaptcha-response" value="" />
+						@Html.ValidationSummary(true, "Molimo ispravite označene pogreške.")
+						<div class="position-relative form-group mb-20px">
+							<span class="form-icon text-medium-gray opacity-6"><i class="bi bi-emoji-smile"></i></span>
+							<input class="ps-0 border-radius-0px bg-transparent border-color-extra-medium-gray form-control required" type="text" name="Name" placeholder="Ime i prezime*" value="@_valName" />
+							@Html.ValidationMessage("Name", null, new { @class = "text-danger" })
+						</div>
+						<div class="position-relative form-group mb-20px">
+							<span class="form-icon medium-gray opacity-6"><i class="bi bi-envelope"></i></span>
+							<input class="ps-0 border-radius-0px bg-transparent border-color-extra-medium-gray form-control required" type="email" name="Email" placeholder="E-mail*" value="@_valEmail" />
+							@Html.ValidationMessage("Email", null, new { @class = "text-danger" })
+						</div>
+						<div class="position-relative form-group form-textarea mt-15px mb-0"> 
+							<textarea class="ps-0 border-radius-0px bg-transparent border-color-extra-medium-gray form-control" name="Message" placeholder="Poruka*" rows="3">@_valMessage</textarea>
+							@Html.ValidationMessage("Message", null, new { @class = "text-danger" })
+							<span class="form-icon medium-gray opacity-6"><i class="bi bi-chat-square-dots"></i></span>
+							<input type="hidden" name="redirect" value="">
+							<button class="btn btn-medium btn-dark-gray btn-round-edge mt-35px submit fw-600" type="submit" data-sitekey="@RecaptchaOptions.Value.SiteKey">Pošalji poruku</button>
+
+							
+							<div class="form-results mt-20px d-none"></div>
+						</div>
+					}
+					@if (!string.IsNullOrWhiteSpace(RecaptchaOptions.Value.SiteKey))
+					{
+						<script src="https://www.google.com/recaptcha/api.js?render=@RecaptchaOptions.Value.SiteKey"></script>
+					}
+					<!-- end contact form -->
+				</div>
+			</div> 
+		</div> 
+	</div>
+</section>
+<!-- end section --> 

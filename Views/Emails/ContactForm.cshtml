@@ -1,0 +1,33 @@
+@model PromomaxWeb.Dtos.Emails.ContactEmailModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Nova poruka</title>
+    <style>
+        body { font-family: Arial, Helvetica, sans-serif; font-size: 14px; color: #222; }
+        .label { font-weight: bold; }
+        .box { border: 1px solid #e5e5e5; padding: 16px; border-radius: 6px; }
+        .muted { color: #666; font-size: 12px; }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <p class="label">Nova poruka s kontakt forme</p>
+        <p><span class="label">Ime:</span> @Model.Name</p>
+        <p><span class="label">Email:</span> @Model.Email</p>
+        @if (!string.IsNullOrWhiteSpace(Model.PageName))
+        {
+            <p><span class="label">Stranica:</span> @Model.PageName</p>
+        }
+        <p><span class="label">Vrijeme:</span> @Model.SubmittedAt.LocalDateTime</p>
+        <hr />
+        <p class="label">Poruka</p>
+        <p>@Html.Raw(Html.Encode(Model.Message).Replace("\n", "<br />"))</p>
+    </div>
+    <p class="muted">Ova poruka je generirana automatski. Ne odgovarajte na ovaj email.</p>
+</body>
+</html>

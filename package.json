@@ -1,0 +1,37 @@
+{
+  "name": "demax-web",
+  "version": "1.0.0",
+  "description": "Demax Web",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "tailwind:watch": "npx @tailwindcss/cli -i ./wwwroot/css/tailwind_input.css -o ./wwwroot/css/output.css --watch",
+    "tailwind:run": "npx @tailwindcss/cli -i ./wwwroot/css/tailwind_input.css -o ./wwwroot/css/output.css"
+  },
+  "author": "Threennovate",
+  "license": "ISC",
+  "devDependencies": {
+    "cssnano": "^6.0.1",
+    "grunt": "^1.4.1",
+    "gulp": "^4.0.2",
+    "gulp-autoprefixer": "^8.0.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-header": "^2.0.9",
+    "gulp-less": "^5.0.0",
+    "gulp-minify": "^3.1.0",
+    "gulp-postcss": "^9.0.1",
+    "gulp-sass": "^5.1.0",
+    "gulp-sourcemaps": "^3.0.0",
+    "gulp-terser": "^2.1.0",
+    "gulp-uglify": "^3.0.2",
+    "gulp-watch": "^5.0.1",
+    "postcss": "^8.4.23",
+    "sass": "^1.62.1"
+  },
+  "dependencies": {
+    "browser-sync": "^2.29.3",
+    "gulp-minify-css": "^1.2.4",
+    "gulp-update": "^0.0.2",
+    "tailwindcss": "^4.0.0"
+  }
+}
