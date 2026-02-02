@@ -1,0 +1,160 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<AboutUs>
+@inject Microsoft.Extensions.Options.IOptions<PromomaxWeb.Options.GoogleRecaptchaOptions> RecaptchaOptions
+@{
+	Layout = "Master.cshtml";
+
+	var homePage = Model.AncestorOrSelf<HomePage>();
+}
+
+<!-- start section -->
+<section class="overflow-hidden p-0">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-12 p-0 position-relative">
+				<img src="@Model.TitleImage?.GetCropUrl("titleImage")" alt="" class="w-100">
+				<div class="alt-font fw-600 fs-350 lg-fs-275 md-fs-250 sm-fs-200 xs-fs-140 ls-minus-5px xs-ls-minus-2px position-absolute right-minus-50px lg-right-minus-0px bottom-minus-80px md-bottom-minus-60px xs-bottom-minus-40px text-white text-outline text-outline-width-3px" data-bottom-top="transform: translate3d(80px, 0px, 0px);" data-top-bottom="transform: translate3d(-280px, 0px, 0px);">O nama</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- end section -->
+<!-- start section -->  
+<section class="pb-25px">
+    <div class="container">
+        <div class="row align-items-center align-items-xl-end mb-70px sm-mb-35px">                    
+            <div class="col-lg-7 col-md-10 md-mb-20px text-lg-start text-center" data-anime='{ "el": "childs", "translateY": [30, 0], "opacity": [0,1], "duration": 600, "delay": 0, "staggervalue": 300, "easing": "easeOutQuad" }'>
+                <span class="fs-16 lh-22 fw-700 mb-15px d-inline-block text-uppercase text-dark-gray border-bottom tw:border-t-0 tw:border-x-0 border-2 border-color-base-color">Promomark</span>
+                <h2 class="alt-font text-dark-gray fw-500 mb-0 ls-minus-1px shadow-none" data-shadow-animation="true" data-animation-delay="700">Vaš strateški partner <span class="fw-700 text-highlight d-inline-block">od 2013. godine.<span class="bg-base-color h-10px bottom-10px opacity-3 separator-animation"></span></span></h2>
+            </div>
+        </div>
+		<div class="row">
+			<div class="col-12 col-xl-8 col-lg-8">
+				<p>Promomark d.o.o. je 100% privatna hrvatska tvrtka specijalizirana za distribuciju i pozicioniranje brendova na domaćem tržištu. Od osnutka 2013. godine, pod vodstvom direktora Marka Stepanića, gradimo mostove između europskih proizvođača i hrvatskih potrošača.</p>
+				<p>Naša snaga leži u raznolikosti i stabilnosti. Uspješno upravljamo portfeljem koji obuhvaća prehrambene i neprehrambene proizvode, s posebnim naglaskom na kozmetiku i osobnu njegu. Surađujemo s brojnim partnerima diljem Europe, pružajući im sigurnost, transparentnost i direktan pristup prodajnim kanalima.</p>
+				<p>Otvoreni smo za nove izazove i kanale distribucije. Bilo da ste etablirani europski brend ili inovativni startup, Promomark posjeduje infrastrukturu i know-how da vaš proizvod postane prepoznatljiv na polici.</p>
+			</div>
+		</div>
+    </div>
+</section>
+<section class="big-section tw:bg-primary-50/50">
+	<div class="container">
+		<div class="row mb-4">
+			<div class="col-lg-6 col-md-10 md-mb-20px text-lg-start text-center" data-anime='{ "el": "childs", "translateY": [30, 0], "opacity": [0,1], "duration": 600, "delay": 0, "staggervalue": 300, "easing": "easeOutQuad" }'>
+				<span class="fs-16 lh-22 fw-700 mb-15px d-inline-block text-uppercase text-dark-gray border-bottom tw:border-t-0 tw:border-x-0 border-2 border-color-base-color">Segmenti poslovanja</span>
+				<h2 class="text-dark-gray fw-600 mb-0 ls-minus-1px">Cjelovita ponuda za maloprodaju</h2>
+			</div>
+		</div>
+		<div class="row row-cols-1 row-cols-lg-3 row-cols-sm-2 justify-content-center" data-anime='{ "el": "childs", "translateY": [50, 0], "opacity": [0,1], "duration": 1200, "delay": 0, "staggervalue": 150, "easing": "easeOutQuad" }'>                  
+			<!-- start features box item -->
+			<div class="col icon-with-text-style-03">
+				<div class="feature-box p-8">
+					<div class="feature-box-icon">
+						<i class="line-icon-Glass-Water icon-double-large text-base-color mb-20px"></i>
+					</div>
+					<div class="feature-box-content last-paragraph-no-margin">
+						<span class="d-inline-block fw-700 text-dark-gray mb-5px fs-19">Filtracija vode</span>
+					</div>
+				</div>
+			</div>
+			<!-- end features box item -->
+			<!-- start features box item -->
+			<div class="col icon-with-text-style-03">
+				<div class="feature-box p-8">
+					<div class="feature-box-icon">
+						<i class="line-icon-Apple icon-double-large text-base-color mb-20px"></i>
+					</div>
+					<div class="feature-box-content last-paragraph-no-margin">
+						<span class="d-inline-block fw-700 text-dark-gray mb-5px fs-19">Zdrava prehrana</span>
+					</div>
+				</div>
+			</div>
+			<!-- end features box item -->
+			<!-- start features box item -->
+			<div class="col icon-with-text-style-03">
+				<div class="feature-box p-8">
+					<div class="feature-box-icon">
+						<i class="line-icon-Eyebrow-2 icon-double-large text-base-color mb-20px"></i>
+					</div>
+					<div class="feature-box-content last-paragraph-no-margin">
+						<span class="d-inline-block fw-700 text-dark-gray mb-5px fs-19">Kozmetika</span>
+					</div>
+				</div>
+			</div>
+			<!-- end features box item -->
+			<!-- start features box item -->
+			<div class="col icon-with-text-style-03">
+				<div class="feature-box p-8">
+					<div class="feature-box-icon">
+						<i class="line-icon-Magic-Wand icon-double-large text-base-color mb-20px"></i>
+					</div>
+					<div class="feature-box-content last-paragraph-no-margin">
+						<span class="d-inline-block fw-700 text-dark-gray mb-5px fs-19">Beauty asortiman</span>
+					</div>
+				</div>
+			</div>
+			<!-- end features box item -->
+			<!-- start features box item -->
+			<div class="col icon-with-text-style-03">
+				<div class="feature-box p-8">
+					<div class="feature-box-icon">
+						<i class="line-icon-Bow-3 icon-double-large text-base-color mb-20px"></i>
+					</div>
+					<div class="feature-box-content last-paragraph-no-margin">
+						<span class="d-inline-block fw-700 text-dark-gray mb-5px fs-19">Modni dodaci za kosu</span>
+					</div>
+				</div>
+			</div>
+			<!-- end features box item -->
+			<!-- start features box item -->
+			<div class="col icon-with-text-style-03">
+				<div class="feature-box p-8">
+					<div class="feature-box-icon">
+						<i class="line-icon-Luggage-2 icon-double-large text-base-color mb-20px"></i>
+					</div>
+					<div class="feature-box-content last-paragraph-no-margin">
+						<span class="d-inline-block fw-700 text-dark-gray mb-5px fs-19">Putni asortiman</span>
+					</div>
+				</div>
+			</div>
+			<!-- end features box item -->
+		</div>
+	</div>
+</section>
+<!-- end section --> 
+@* @{
+    var partners = homePage.Partners?.Select(x => x.Content as Partner).ToList();
+}
+@if(partners.Any())
+{
+    <section>
+        <div class="container-fluid">
+            <div class="row justify-content-center pb-4 md-pb-8" data-anime='{ "translateY": [0, 0], "opacity": [0,1], "duration": 1200, "delay": 150, "staggervalue": 150, "easing": "easeOutQuad" }'>
+                <div class="col-auto icon-with-text-style-08">
+                    <div class="feature-box feature-box-left-icon-middle">
+                        <div class="feature-box-icon me-10px">
+                            <i class="far fa-star icon-very-medium text-base-color"></i>
+                        </div>
+                        <div class="feature-box-content text-dark-gray fs-20 fw-600 ls-minus-05px">Ponosni smo na dugogodišnju suradnju sa top 10 hrvatskih retailera.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row position-relative clients-style-08" data-anime='{ "translateX": [0, 0], "opacity": [0,1], "duration": 1200, "delay": 0, "staggervalue": 150, "easing": "easeOutQuad" }'>
+                <div class="col swiper text-center feather-shadow" data-slider-options='{ "slidesPerView": 2, "spaceBetween":0, "speed": 6000, "loop": true, "pagination": { "el": ".slider-four-slide-pagination-2", "clickable": false }, "allowTouchMove": false, "autoplay": { "delay":0, "disableOnInteraction": false }, "navigation": { "nextEl": ".slider-four-slide-next-2", "prevEl": ".slider-four-slide-prev-2" }, "keyboard": { "enabled": true, "onlyInViewport": true }, "breakpoints": { "1200": { "slidesPerView": 6 }, "992": { "slidesPerView": 4 }, "768": { "slidesPerView": 3 } }, "effect": "slide" }'>
+                    <div class="swiper-wrapper marquee-slide">
+                        @foreach(var partner in partners)
+                        {
+                            <!-- start client item -->
+                            <div class="swiper-slide">
+                                <a class="d-flex justify-content-center" href="@partner.Link?.Url" target="@partner.Link?.Target"><img src="@partner.Logo?.Url()" 
+                                class="h-40px xs-h-30px tw:opacity-80 tw:hover:opacity-100 tw:grayscale tw:hover:grayscale-0 tw:transition tw:duration-300" alt="" /></a>
+                            </div>
+                            <!-- end client item -->
+                        }
+                        
+                    </div> 
+                </div>  
+            </div>
+        </div>
+    </section>
+} *@

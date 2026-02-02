@@ -5,6 +5,11 @@
 	Layout = "Master.cshtml";
 
 	var homePage = Model.AncestorOrSelf<HomePage>();
+
+	var partnershipEmails = homePage.PartnershipEmails.ToList();
+	var marketingEmails = homePage.MarketingEmails.ToList();
+	var salesEmails = homePage.SalesEmails.ToList();
+	var supportEmails = homePage.SupportEmails.ToList();
 }
 
 
@@ -13,7 +18,7 @@
 		<div class="row align-items-center align-items-lg-end justify-content-center extra-very-small-screen g-0">
 			<div class="col-xxl-5 col-xl-6 col-lg-7 position-relative page-title-extra-small md-mb-30px md-mt-auto" data-anime='{ "el": "childs", "translateY": [30, 0], "opacity": [0,1], "duration": 600, "delay": 0, "staggervalue": 300, "easing": "easeOutQuad" }'>
 				<h1 class="text-base-color">Započnimo suradnju</h1>
-				<h2 class="alt-font text-dark-gray fw-500 mb-0 ls-minus-1px shadow-none" data-shadow-animation="true" data-animation-delay="700">Spremni za idući korak? <span class="fw-700 text-highlight d-inline-block">Postanite partner.<span class="bg-base-color h-10px bottom-10px opacity-3 separator-animation"></span></span></h2>
+				<h2 class="alt-font text-dark-gray fw-500 mb-0 ls-minus-1px shadow-none" data-shadow-animation="true" data-animation-delay="700">Zainteresirani ste? <span class="fw-700 text-highlight d-inline-block">Postanite partner.<span class="bg-base-color h-10px bottom-10px opacity-3 separator-animation"></span></span></h2>
 			</div>
 			<div class="col-lg-5 offset-xxl-1 offset-xl-1 tw:border-l-2 border-color-base-color ps-40px sm-ps-25px md-mb-auto">
 				<span class="d-block w-85 lg-w-100" data-anime='{ "el": "lines", "translateY": [15, 0], "opacity": [0,1], "duration": 600, "delay": 0, "staggervalue": 300, "easing": "easeOutQuad" }'>Povezujemo vrhunske brendove s vodećim trgovačkim lancima. Ispunite formu ili nas kontaktirajte direktno kako bismo pronašli najbolje rješenje za vas.</span>
@@ -46,9 +51,54 @@
 						<p class="w-80 lg-w-100">Bednjanska 10 A,<br> Zagreb</p>
 					</div>
 					<div class="col">
-						<span class="fs-18 alt-font fw-600 d-block text-dark-gray mb-5px">Kontaktirajte nas</span>
-						<a href="tel:@homePage.ContactPhone.Replace(" ", "")">@homePage.ContactPhone</a><br>
-						<a href="mailto:@homePage.ContactEmail" class="text-decoration-line-bottom text-dark-gray">@homePage.ContactEmail</a>
+						<span class="fs-18 alt-font fw-600 d-block text-dark-gray mb-5px">Postanite partner</span>
+						<span>Prilagođena rješenja za sve partnere.</span>
+						<br>
+						@for(var i = 0; i < partnershipEmails.Count; i++)
+						{
+							<a href="mailto:@partnershipEmails[i]" class="text-decoration-line-bottom text-dark-gray">@partnershipEmails[i]</a>
+							if(i < partnershipEmails.Count - 1)
+							{
+								<br>
+							}
+						}
+					</div>
+				</div>
+				<div class="row row-cols-1 row-cols-sm-2 mb-10">
+					<div class="col last-paragraph-no-margin xs-mb-20px">
+						<span class="fs-18 alt-font fw-600 d-block text-dark-gray mb-5px">Prodaja</span>
+						@for(var i = 0; i < salesEmails.Count; i++)
+						{
+							<a href="mailto:@salesEmails[i]" class="text-decoration-line-bottom text-dark-gray">@salesEmails[i]</a>
+							if(i < salesEmails.Count - 1)
+							{
+								<br>
+							}
+						}
+					</div>
+					<div class="col">
+						<span class="fs-18 alt-font fw-600 d-block text-dark-gray mb-5px">Marketing</span>
+						@for(var i = 0; i < marketingEmails.Count; i++)
+						{
+							<a href="mailto:@marketingEmails[i]" class="text-decoration-line-bottom text-dark-gray">@marketingEmails[i]</a>
+							if(i < marketingEmails.Count - 1)
+							{
+								<br>
+							}
+						}
+					</div>
+				</div>
+				<div class="row row-cols-1 row-cols-sm-2 mb-10">
+					<div class="col">
+						<span class="fs-18 alt-font fw-600 d-block text-dark-gray mb-5px">Webshop podrška</span>
+						@for(var i = 0; i < supportEmails.Count; i++)
+						{
+							<a href="mailto:@supportEmails[i]" class="text-decoration-line-bottom text-dark-gray">@supportEmails[i]</a>
+							if(i < supportEmails.Count - 1)
+							{
+								<br>
+							}
+						}
 					</div>
 				</div>
 			</div> 

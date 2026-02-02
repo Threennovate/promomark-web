@@ -4,12 +4,11 @@
 @{
 	Layout = "Master.cshtml";
 
-    var bannerImages = Model.BannerImages;
-
     var brands = Model.Descendants<Brand>().ToList();
     var contactPage = Model.Children<ContactPage>().FirstOrDefault();
     var brandsPage = Model.Children<Brands>().FirstOrDefault();
     var brandCategories = brandsPage.Children<Brands>().ToList();
+    var aboutUsPage = Model.Children<AboutUs>().FirstOrDefault();
 }
 
 <!-- start slider -->
@@ -81,7 +80,7 @@
         <img src="images/demo-logistics-home-bg-01.jpg" class="position-absolute bottom-10px right-0px z-index-minus-1" data-bottom-top="transform: translateY(150px)" data-top-bottom="transform: translateY(-150px)" alt=""/>
         <div class="row align-items-center justify-content-center">
             <div class="col-lg-6 col-md-10 md-mb-50px" data-anime='{ "translate": [0, 0], "opacity": [0,1], "duration": 600, "delay": 0, "staggervalue": 300, "easing": "easeOutQuad" }'> 
-                <img src="/images/promomark_about_01.png" class="w-100" data-bottom-top="transform: translateY(-50px)" data-top-bottom="transform: translateY(50px)" alt="">
+                <img src="/images/promomark_about_02.webp" class="w-100" data-bottom-top="transform: translateY(-50px)" data-top-bottom="transform: translateY(50px)" alt="">
             </div>
             <div class="col-xl-5 col-lg-6 col-md-10 offset-xl-1" data-anime='{ "el": "childs", "translateY": [30, 0], "opacity": [0,1], "duration": 600, "delay": 0, "staggervalue": 300, "easing": "easeOutQuad" }'>
                 <span class="fs-20 d-inline-block mb-15px text-base-color">Više od distribucije</span> 
@@ -108,7 +107,7 @@
                     </div>
                 </div>
                 <div class="mt-35px d-flex flex-wrap">
-                    <a href="" class="btn btn-large btn-dark-gray btn-hover-animation-switch btn-round-edge btn-box-shadow btn-icon-right me-30px">
+                    <a href="@aboutUsPage?.Url()" class="btn btn-large btn-dark-gray btn-hover-animation-switch btn-round-edge btn-box-shadow btn-icon-right me-30px">
                         <span> 
                             <span class="btn-text">Saznajte više o nama</span>
                             <span class="btn-icon"><i class="feather icon-feather-arrow-right"></i></span>
