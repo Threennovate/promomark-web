@@ -1,4 +1,5 @@
 @using Umbraco.Cms.Web.Common.PublishedModels;
+@using PromomarkWeb.Helpers;
 @inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<ContactPage>
 @inject Microsoft.Extensions.Options.IOptions<PromomaxWeb.Options.GoogleRecaptchaOptions> RecaptchaOptions
 @{
@@ -16,11 +17,11 @@
 	<div class="container">
 		<div class="row align-items-center align-items-lg-end justify-content-center extra-very-small-screen g-0">
 			<div class="col-xxl-5 col-xl-6 col-lg-7 position-relative page-title-extra-small md-mb-30px md-mt-auto" data-anime='{ "el": "childs", "translateY": [30, 0], "opacity": [0,1], "duration": 600, "delay": 0, "staggervalue": 300, "easing": "easeOutQuad" }'>
-				<h1 class="text-base-color">Započnimo suradnju</h1>
-				<h2 class="alt-font text-dark-gray fw-500 mb-0 ls-minus-1px shadow-none" data-shadow-animation="true" data-animation-delay="700">Zainteresirani ste? <span class="fw-700 text-highlight d-inline-block">Postanite partner.<span class="bg-base-color h-10px bottom-10px opacity-3 separator-animation"></span></span></h2>
+				<h1 class="text-base-color">@Model.TitleTagline</h1>
+				<h2 class="alt-font text-dark-gray fw-500 mb-0 ls-minus-1px shadow-none" data-shadow-animation="true" data-animation-delay="700">@Model.Title1.RemoveOuterPTags() <span class="fw-700 text-highlight d-inline-block">@Model.Title2 <span class="bg-base-color h-10px bottom-10px opacity-3 separator-animation"></span></span></h2>
 			</div>
 			<div class="col-lg-5 offset-xxl-1 offset-xl-1 tw:border-l-2 border-color-base-color ps-40px sm-ps-25px md-mb-auto">
-				<span class="d-block w-85 lg-w-100" data-anime='{ "el": "lines", "translateY": [15, 0], "opacity": [0,1], "duration": 600, "delay": 0, "staggervalue": 300, "easing": "easeOutQuad" }'>Povezujemo vrhunske brendove s vodećim trgovačkim lancima. Ispunite formu ili nas kontaktirajte direktno kako bismo pronašli najbolje rješenje za vas.</span>
+				<span class="d-block w-85 lg-w-100" data-anime='{ "el": "lines", "translateY": [15, 0], "opacity": [0,1], "duration": 600, "delay": 0, "staggervalue": 300, "easing": "easeOutQuad" }'>@Model.TitleText.RemoveOuterPTags()</span>
 			</div>
 		</div>
 	</div>
