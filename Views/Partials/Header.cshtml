@@ -29,7 +29,7 @@
                 </button>
                 <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
                     <ul class="navbar-nav alt-font">
-                        <li class="nav-item"><a href="@homePage.Url()" class="nav-link @Html.Raw(Model.Id == homePage.Id ? "active" : "")">Naslovnica</a></li> 
+                        <li class="nav-item"><a href="@homePage.Url()" class="nav-link @Html.Raw(Model.Id == homePage.Id ? "active" : "")">@homePage.Name</a></li> 
                         @foreach (var childPage in otherPages)
                         {
                             if(childPage is Brands)

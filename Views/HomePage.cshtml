@@ -1,4 +1,5 @@
 ﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@using PromomarkWeb.Helpers;
 @inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<HomePage>
 @inject Microsoft.Extensions.Options.IOptions<PromomaxWeb.Options.GoogleRecaptchaOptions> RecaptchaOptions
 @{
@@ -16,12 +17,12 @@
     <div class="swiper h-100 swiper-light-pagination" data-slider-options='{ "slidesPerView": 1, "loop": true, "pagination": { "el": ".swiper-pagination-bullets", "clickable": true }, "navigation": { "nextEl": ".slider-one-slide-next-1", "prevEl": ".slider-one-slide-prev-1" }, "autoplay": { "delay": 4000, "disableOnInteraction": false },  "keyboard": { "enabled": true, "onlyInViewport": true }, "effect": "slide" }'>
         <div class="swiper-wrapper">
             <!-- start slider item -->
-            <div class="swiper-slide cover-background position-relative" style="background-image:url('/images/hero_16.jpeg');">
+            <div class="swiper-slide cover-background position-relative" style="background-image:url('@Model.HeroImage?.Url()');">
                 <div class="container tw:max-w-[1600px] h-100 position-relative tw:z-30">
                     <div class="row align-items-center h-100 xl-ps-10 sm-ps-0">
                         <div class="col-xxl-5 col-xl-10 text-white">
-                            <h1 class="fw-600">Vaš partner za brzu i sigurnu distribuciju.</h1>  
-                            <div class="fs-20 opacity-8 mb-40px sm-mb-30px">Povezujemo vrhunske svjetske brendove s vodećim trgovačkim lancima.</div>
+                            <h1 class="fw-600">@Model.HeroTitle.RemoveOuterPTags()</h1>  
+                            <div class="fs-20 opacity-8 mb-40px sm-mb-30px">@Model.HeroSubtitle.RemoveOuterPTags()</div>
                             <div class="lg-mb-8 md-mb-0">
                                 <a href="@brandsPage?.Url()" class="btn btn-white btn-extra-large btn-round-edge fw-700 btn-box-shadow me-35px">Istražite brendove</a>
                                 <a href="@contactPage?.Url()" class="text-center d-inline-flex sm-mt-20px rounded-circle video-icon-box video-icon-medium popup-vimeo">
@@ -59,14 +60,14 @@
             <div class="col-xl-5 outside-box-top-205px lg-mt-0 position-relative z-index-1">
                 <div class="border-radius-10px overflow-hidden">
                     <div class="bg-base-color p-50px xs-p-30px position-relative">
-                        <span class="text-dark-gray opacity-8 fw-500 d-block mb-5px">Strateško partnerstvo</span>
-                        <h5 class="mb-0 fw-700 text-dark-gray">Direktan ulaz na police top 10 trgovačkih lanaca.</h5>
+                        <span class="text-dark-gray opacity-8 fw-500 d-block mb-5px">@Model.FloatingCtaTagline.RemoveOuterPTags()</span>
+                        <h5 class="mb-0 fw-700 text-dark-gray">@Model.FloatingCtaTitle.RemoveOuterPTags()</h5>
                         <div class="position-absolute top-0 end-0">
-                            <img src="images/demo-logistics-diagonal-line-01.svg" alt="" height="100" width="100">
+                            <img src="/images/demo-logistics-diagonal-line-01.svg" alt="" height="100" width="100">
                         </div>
                     </div>
                     <div class="bg-dark-gray ps-50px pe-50px pt-20px pb-20px sm-ps-30px sm-pe-30px">
-                        <a href="@contactPage?.Url()" class="fs-19 fw-500 text-white d-flex w-100 align-items-center">Postanite partner<i class="feather icon-feather-plus ms-auto icon-extra-medium"></i></a>
+                        <a href="@Model.FloatingCtaButtonLink?.Url" class="fs-19 fw-500 text-white d-flex w-100 align-items-center">@Model.FloatingCtaButtonText.RemoveOuterPTags() <i class="feather icon-feather-plus ms-auto icon-extra-medium"></i></a>
                     </div>
                 </div>
             </div>
@@ -77,40 +78,35 @@
 <!-- start section --> 
 <section class="position-relative">
     <div class="container">
-        <img src="images/demo-logistics-home-bg-01.jpg" class="position-absolute bottom-10px right-0px z-index-minus-1" data-bottom-top="transform: translateY(150px)" data-top-bottom="transform: translateY(-150px)" alt=""/>
+        <img src="/images/demo-logistics-home-bg-01.jpg" class="position-absolute bottom-10px right-0px z-index-minus-1" data-bottom-top="transform: translateY(150px)" data-top-bottom="transform: translateY(-150px)" alt=""/>
         <div class="row align-items-center justify-content-center">
             <div class="col-lg-6 col-md-10 md-mb-50px" data-anime='{ "translate": [0, 0], "opacity": [0,1], "duration": 600, "delay": 0, "staggervalue": 300, "easing": "easeOutQuad" }'> 
-                <img src="/images/promomark_about_02.webp" class="w-100" data-bottom-top="transform: translateY(-50px)" data-top-bottom="transform: translateY(50px)" alt="">
+                <img src="@Model.AboutImage?.Url()" class="w-100" data-bottom-top="transform: translateY(-50px)" data-top-bottom="transform: translateY(50px)" alt="">
             </div>
             <div class="col-xl-5 col-lg-6 col-md-10 offset-xl-1" data-anime='{ "el": "childs", "translateY": [30, 0], "opacity": [0,1], "duration": 600, "delay": 0, "staggervalue": 300, "easing": "easeOutQuad" }'>
-                <span class="fs-20 d-inline-block mb-15px text-base-color">Više od distribucije</span> 
-                <h2 class="fw-700 ls-minus-1px text-dark-gray mb-20px">Vaša infrastruktura za tržišni uspjeh.</h2>
-                <p class="w-90 lg-w-100">U Promomarku ne prodajemo samo proizvode; mi osiguravamo da oni budu na pravom mjestu u pravo vrijeme. Naša logistička mreža omogućuje vam fokus na razvoj brenda, dok mi rješavamo operativnu kompleksnost uvoza, skladištenja i plasmana.</p>
-                <div class="icon-with-text-style-08 mb-10px">
-                    <div class="feature-box feature-box-left-icon-middle overflow-hidden">
-                        <div class="feature-box-icon feature-box-icon-rounded w-40px h-40px bg-light-medium-gray rounded-circle me-15px">
-                            <i class="fa-solid fa-check fs-14 text-dark-gray"></i> 
+                <span class="fs-20 d-inline-block mb-15px text-base-color">@Model.AboutTagline</span> 
+                <h2 class="fw-700 ls-minus-1px text-dark-gray mb-20px">@Model.AboutTitle.RemoveOuterPTags()</h2>
+                <p class="w-90 lg-w-100">@Model.AboutText.RemoveOuterPTags()</p>
+                @if(Model.AboutBulletPoints != null)
+                {
+                    foreach(var bulletPoint in Model.AboutBulletPoints)
+                    {
+                        <div class="icon-with-text-style-08 mb-10px">
+                            <div class="feature-box feature-box-left-icon-middle overflow-hidden">
+                                <div class="feature-box-icon feature-box-icon-rounded w-40px h-40px bg-light-medium-gray rounded-circle me-15px">
+                                    <i class="fa-solid fa-check fs-14 text-dark-gray"></i> 
+                                </div>
+                                <div class="feature-box-content"> 
+                                    <span class="text-dark-gray fw-500">@bulletPoint</span>
+                                </div>
+                            </div>
                         </div>
-                        <div class="feature-box-content"> 
-                            <span class="text-dark-gray fw-500">Pouzdana logistika i skladištenje</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="icon-with-text-style-08 mb-10px">
-                    <div class="feature-box feature-box-left-icon-middle overflow-hidden">
-                        <div class="feature-box-icon feature-box-icon-rounded w-40px h-40px bg-light-medium-gray rounded-circle me-15px">
-                            <i class="fa-solid fa-check fs-14 text-dark-gray"></i> 
-                        </div>
-                        <div class="feature-box-content"> 
-                            <span class="text-dark-gray fw-500">Pokrivenost cijele Hrvatske</span>
-                        </div>
-                    </div>
-                </div>
+                    }
+                }
                 <div class="mt-35px d-flex flex-wrap">
-                    <a href="@aboutUsPage?.Url()" class="btn btn-large btn-dark-gray btn-hover-animation-switch btn-round-edge btn-box-shadow btn-icon-right me-30px">
+                    <a href="@Model.AboutCtaLink?.Url" class="btn btn-large btn-dark-gray btn-hover-animation-switch btn-round-edge btn-box-shadow btn-icon-right me-30px">
                         <span> 
-                            <span class="btn-text">Saznajte više o nama</span>
-                            <span class="btn-icon"><i class="feather icon-feather-arrow-right"></i></span>
+                            <span class="btn-text">@Model.AboutCtaText</span>
                             <span class="btn-icon"><i class="feather icon-feather-arrow-right"></i></span>
                         </span>
                     </a>
@@ -133,7 +129,7 @@
                         <div class="feature-box-icon me-10px">
                             <i class="far fa-star icon-very-medium text-base-color"></i>
                         </div>
-                        <div class="feature-box-content text-dark-gray fs-20 fw-600 ls-minus-05px">Ponosni smo na dugogodišnju suradnju sa top 10 hrvatskih retailera.</div>
+                        <div class="feature-box-content text-dark-gray fs-20 fw-600 ls-minus-05px">@Model.PartnersTagline</div>
                     </div>
                 </div>
             </div>
@@ -162,58 +158,39 @@
     <div class="container">
         <div class="row align-items-center align-items-xl-end justify-content-center mb-70px sm-mb-35px">                    
             <div class="col-lg-6 col-md-10 md-mb-20px text-lg-start text-center" data-anime='{ "el": "childs", "translateY": [30, 0], "opacity": [0,1], "duration": 600, "delay": 0, "staggervalue": 300, "easing": "easeOutQuad" }'>
-                <span class="fs-16 lh-22 fw-700 mb-15px d-inline-block text-uppercase text-dark-gray border-bottom tw:border-t-0 tw:border-x-0 border-2 border-color-base-color">VAŠ STRATEŠKI PARTNER OD 2013.</span>
-                <h2 class="text-dark-gray fw-700 mb-0 ls-minus-1px">Cjelovita podrška za rast vašeg brenda.</h2>
+                <span class="fs-16 lh-22 fw-700 mb-15px d-inline-block text-uppercase text-dark-gray border-bottom tw:border-t-0 tw:border-x-0 border-2 border-color-base-color">@Model.FeaturesTagline</span>
+                <h2 class="text-dark-gray fw-700 mb-0 ls-minus-1px">@Model.FeaturesTitle.RemoveOuterPTags()</h2>
             </div>
             <div class="col-xl-5 col-lg-6 col-md-10 offset-xl-1 text-lg-start text-center last-paragraph-no-margin">
-                <p data-anime='{ "el": "lines", "translateY": [30, 0], "opacity": [0,1], "duration": 600, "delay": 0, "staggervalue": 300, "easing": "easeOutQuad"}'>Ne nudimo samo prijevoz, već kompletan "Market Access". Naša infrastruktura i odnosi s trgovačkim lancima omogućuju vam da se fokusirate na razvoj proizvoda, dok mi brinemo o njihovom putu do kupca.</p>
+                <p data-anime='{ "el": "lines", "translateY": [30, 0], "opacity": [0,1], "duration": 600, "delay": 0, "staggervalue": 300, "easing": "easeOutQuad"}'>@Model.FeaturesText.RemoveOuterPTags()</p>
             </div>
         </div>
-        <div class="row row-cols-1 row-cols-lg-3 row-cols-md-2 justify-content-center mb-70px sm-mb-35px" data-anime='{ "el": "childs", "translateX": [-30, 0], "opacity": [0,1], "duration": 1200, "delay": 0, "staggervalue": 300, "easing": "easeOutQuad" }'>
-            <!-- start features box item -->
-            <div class="col icon-with-text-style-07 transition-inner-all md-mb-30px">
-                <div class="bg-very-light-gray h-100 justify-content-end feature-box flex-column-reverse p-15 xl-p-13 border-radius-8px">
-                    <div class="feature-box-icon"> 
-                        <img src="/images/icons/truck.svg" class="tw:h-[72px] tw:w-auto" alt="">
+        @if(Model.Features.Any())
+        {
+            <div class="row row-cols-1 row-cols-lg-3 row-cols-md-2 justify-content-center mb-70px sm-mb-35px" data-anime='{ "el": "childs", "translateX": [-30, 0], "opacity": [0,1], "duration": 1200, "delay": 0, "staggervalue": 300, "easing": "easeOutQuad" }'>
+                @foreach(var featureItem in Model.Features)
+                {
+                    var feature = featureItem.Content as HomeFeatureBlock;
+                    <!-- start features box item -->
+                    <div class="col icon-with-text-style-07 transition-inner-all md-mb-30px">
+                        <div class="bg-very-light-gray h-100 justify-content-end feature-box flex-column-reverse p-15 xl-p-13 border-radius-8px">
+                            <div class="feature-box-icon"> 
+                                <img src="@feature.Icon?.Url()" class="tw:h-[72px] tw:w-auto" alt="">
+                            </div>
+                            <div class="feature-box-content">
+                                <span class="d-inline-block fw-600 text-dark-gray mb-5px fs-20">@feature.Title</span>
+                                <p class="mb-30px">@feature.Text.RemoveOuterPTags()</p>
+                            </div>                        
+                        </div>
                     </div>
-                    <div class="feature-box-content">
-                        <span class="d-inline-block fw-600 text-dark-gray mb-5px fs-20">Brza i sigurna isporuka</span>
-                        <p class="mb-30px">Pokrivamo cijelu Hrvatsku uz optimiziranu logistiku koja osigurava točnu isporuku do svakog prodajnog mjesta.</p>
-                    </div>                        
-                </div>
+                    <!-- end features box item -->
+                }
             </div>
-            <!-- end features box item -->
-            <!-- start features box item -->
-            <div class="col icon-with-text-style-07 transition-inner-all md-mb-30px">
-                <div class="bg-very-light-gray h-100 justify-content-end feature-box flex-column-reverse p-15 xl-p-13 border-radius-8px">
-                    <div class="feature-box-icon"> 
-                        <img src="/images/icons/handshake.svg" class="tw:h-[72px] tw:w-auto" alt="">
-                    </div>
-                    <div class="feature-box-content">
-                        <span class="d-inline-block fw-600 text-dark-gray mb-5px fs-20">Dugoročna suradnja</span>
-                        <p class="mb-30px">Gradimo odnose na povjerenju. Nudimo rješenja krojena po mjeri svakog partnera, od principala do retailera.</p>
-                    </div>
-                </div>
-            </div>
-            <!-- end features box item -->
-            <!-- start features box item -->
-            <div class="col icon-with-text-style-07 transition-inner-all">
-                <div class="bg-very-light-gray h-100 justify-content-end feature-box flex-column-reverse p-15 xl-p-13 border-radius-8px">
-                    <div class="feature-box-icon"> 
-                        <img src="/images/icons/globe.svg" class="tw:h-[72px] tw:w-auto" alt="">
-                    </div>
-                    <div class="feature-box-content">
-                        <span class="d-inline-block fw-600 text-dark-gray mb-5px fs-20">Domaći i strani brendovi</span>
-                        <p class="mb-30px">Povezujemo vrhunske europske i domaće brendove s hrvatskim tržištem, jamčeći kvalitetu i siguran plasman.</p>
-                    </div>                        
-                </div>
-            </div>
-            <!-- end features box item -->
-        </div>
+        }
         <div class="row">
             <div class="col d-flex justify-content-center align-items-center">
                 <i class="bi bi-patch-check-fill text-base-color icon-very-medium me-10px"></i>
-                <span class="fs-22 fw-500 text-dark-gray">Posvećeni smo izvrsnosti i <span class="text-decoration-line-bottom text-dark-gray fw-700">transparentnom poslovanju</span> prema svim našim partnerima.</span>
+                <span class="fs-22 fw-500 text-dark-gray">@Model.FeaturesEndTagline.RemoveOuterPTags()</span>
             </div>
         </div>
     </div>
@@ -225,8 +202,8 @@
     <div class="container">
         <div class="row justify-content-center mb-3 xs-mb-2">
             <div class="col-lg-7 text-center" data-anime='{ "el": "childs", "opacity": [0, 1], "translateY": [0, 0], "staggervalue": 200, "easing": "easeInOutSine" }'>
-                <span class="fs-16 lh-22 fw-700 mb-10px d-inline-block text-uppercase text-dark-gray border-bottom border-2 tw:border-x-0 tw:border-t-0 border-color-base-color">SEGMENTI POSLOVANJA</span>
-                <h2 class="text-dark-gray fw-700 mb-0 ls-minus-1px">Pažljivo birana kolekcija proizvoda</h2>
+                <span class="fs-16 lh-22 fw-700 mb-10px d-inline-block text-uppercase text-dark-gray border-bottom border-2 tw:border-x-0 tw:border-t-0 border-color-base-color">@Model.BrandsTagline</span>
+                <h2 class="text-dark-gray fw-700 mb-0 ls-minus-1px">@Model.BrandsTitle.RemoveOuterPTags()</h2>
             </div>
         </div>
         <div class="row">
@@ -291,8 +268,8 @@
     <div class="container position-relative">
         <div class="row justify-content-center">
             <div class="col-xl-4 col-lg-5 md-mb-40px">
-                <h3 class="text-white fw-500 ls-minus-1px">Postanite naš partner.</h3>
-                <p class="text-white opacity-7">Spremni za rast na hrvatskom tržištu? Bilo da ste vlasnik brenda koji traži distribuciju ili trgovački lanac u potrazi za novim asortimanom, tu smo za vas.</p>
+                <h3 class="text-white fw-500 ls-minus-1px">@Model.ContactTitle.RemoveOuterPTags()</h3>
+                <p class="text-white opacity-7">@Model.ContactText.RemoveOuterPTags()</p>
                 <div class="row row-cols-1 justify-content-center mt-30px">                 
                     <!-- start features box item -->
                     <div class="col icon-with-text-style-08">

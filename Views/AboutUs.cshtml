@@ -1,4 +1,5 @@
 ﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@using PromomarkWeb.Helpers;
 @inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<AboutUs>
 @inject Microsoft.Extensions.Options.IOptions<PromomaxWeb.Options.GoogleRecaptchaOptions> RecaptchaOptions
 @{
@@ -13,7 +14,7 @@
 		<div class="row">
 			<div class="col-12 p-0 position-relative">
 				<img src="@Model.TitleImage?.GetCropUrl("titleImage")" alt="" class="w-100">
-				<div class="alt-font fw-600 fs-350 lg-fs-275 md-fs-250 sm-fs-200 xs-fs-140 ls-minus-5px xs-ls-minus-2px position-absolute right-minus-50px lg-right-minus-0px bottom-minus-80px md-bottom-minus-60px xs-bottom-minus-40px text-white text-outline text-outline-width-3px" data-bottom-top="transform: translate3d(80px, 0px, 0px);" data-top-bottom="transform: translate3d(-280px, 0px, 0px);">O nama</div>
+				<div class="alt-font fw-600 fs-350 lg-fs-275 md-fs-250 sm-fs-200 xs-fs-140 ls-minus-5px xs-ls-minus-2px position-absolute right-minus-50px lg-right-minus-0px bottom-minus-80px md-bottom-minus-60px xs-bottom-minus-40px text-white text-outline text-outline-width-3px" data-bottom-top="transform: translate3d(80px, 0px, 0px);" data-top-bottom="transform: translate3d(-280px, 0px, 0px);">@Model.PageTitle</div>
 			</div>
 		</div>
 	</div>
@@ -24,15 +25,13 @@
     <div class="container">
         <div class="row align-items-center align-items-xl-end mb-70px sm-mb-35px">                    
             <div class="col-lg-7 col-md-10 md-mb-20px text-lg-start text-center" data-anime='{ "el": "childs", "translateY": [30, 0], "opacity": [0,1], "duration": 600, "delay": 0, "staggervalue": 300, "easing": "easeOutQuad" }'>
-                <span class="fs-16 lh-22 fw-700 mb-15px d-inline-block text-uppercase text-dark-gray border-bottom tw:border-t-0 tw:border-x-0 border-2 border-color-base-color">Promomark</span>
-                <h2 class="alt-font text-dark-gray fw-500 mb-0 ls-minus-1px shadow-none" data-shadow-animation="true" data-animation-delay="700">Vaš strateški partner <span class="fw-700 text-highlight d-inline-block">od 2013. godine.<span class="bg-base-color h-10px bottom-10px opacity-3 separator-animation"></span></span></h2>
+                <span class="fs-16 lh-22 fw-700 mb-15px d-inline-block text-uppercase text-dark-gray border-bottom tw:border-t-0 tw:border-x-0 border-2 border-color-base-color">@Model.AboutTagline</span>
+                <h2 class="alt-font text-dark-gray fw-500 mb-0 ls-minus-1px shadow-none" data-shadow-animation="true" data-animation-delay="700">@Model.AboutTitle1.RemoveOuterPTags() <span class="fw-700 text-highlight d-inline-block">@Model.AboutTitle2 <span class="bg-base-color h-10px bottom-10px opacity-3 separator-animation"></span></span></h2>
             </div>
         </div>
 		<div class="row">
 			<div class="col-12 col-xl-8 col-lg-8">
-				<p>Promomark d.o.o. je 100% privatna hrvatska tvrtka specijalizirana za distribuciju i pozicioniranje brendova na domaćem tržištu. Od osnutka 2013. godine, pod vodstvom direktora Marka Stepanića, gradimo mostove između europskih proizvođača i hrvatskih potrošača.</p>
-				<p>Naša snaga leži u raznolikosti i stabilnosti. Uspješno upravljamo portfeljem koji obuhvaća prehrambene i neprehrambene proizvode, s posebnim naglaskom na kozmetiku i osobnu njegu. Surađujemo s brojnim partnerima diljem Europe, pružajući im sigurnost, transparentnost i direktan pristup prodajnim kanalima.</p>
-				<p>Otvoreni smo za nove izazove i kanale distribucije. Bilo da ste etablirani europski brend ili inovativni startup, Promomark posjeduje infrastrukturu i know-how da vaš proizvod postane prepoznatljiv na polici.</p>
+				@Model.AboutText.RemoveOuterPTags()
 			</div>
 		</div>
     </div>
@@ -41,8 +40,8 @@
 	<div class="container">
 		<div class="row mb-4">
 			<div class="col-lg-6 col-md-10 md-mb-20px text-lg-start text-center" data-anime='{ "el": "childs", "translateY": [30, 0], "opacity": [0,1], "duration": 600, "delay": 0, "staggervalue": 300, "easing": "easeOutQuad" }'>
-				<span class="fs-16 lh-22 fw-700 mb-15px d-inline-block text-uppercase text-dark-gray border-bottom tw:border-t-0 tw:border-x-0 border-2 border-color-base-color">Segmenti poslovanja</span>
-				<h2 class="text-dark-gray fw-600 mb-0 ls-minus-1px">Cjelovita ponuda za maloprodaju</h2>
+				<span class="fs-16 lh-22 fw-700 mb-15px d-inline-block text-uppercase text-dark-gray border-bottom tw:border-t-0 tw:border-x-0 border-2 border-color-base-color">@Model.ServicesTagline</span>
+				<h2 class="text-dark-gray fw-600 mb-0 ls-minus-1px">@Model.ServicesTitle.RemoveOuterPTags()</h2>
 			</div>
 		</div>
 		<div class="row row-cols-1 row-cols-lg-3 row-cols-sm-2 justify-content-center" data-anime='{ "el": "childs", "translateY": [50, 0], "opacity": [0,1], "duration": 1200, "delay": 0, "staggervalue": 150, "easing": "easeOutQuad" }'>                  
