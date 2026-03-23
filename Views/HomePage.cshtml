@@ -278,7 +278,7 @@
                             </div>
                             <div class="feature-box-content last-paragraph-no-margin">
                                 <span class="text-white opacity-7 d-block">@Umbraco.GetDictionaryValue("HomePage.ContactDirectLabel")</span>
-                                <span class="d-block fs-22 text-white"><a href="mailto:@Model.ContactEmail" class="text-white text-decoration-line-bottom">@Model.ContactEmail</a></span>
+                                <span class="d-block fs-22 text-white">@Html.Raw(Model.ContactEmail.EmailToImageTag("tw:h-[24px] tw:w-auto"))</span>
                             </div>
                         </div>
                     </div>

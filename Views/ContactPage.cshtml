@@ -57,7 +57,7 @@
 						<br>
 						@for(var i = 0; i < partnershipEmails.Count; i++)
 						{
-							<a href="mailto:@partnershipEmails[i]" class="text-decoration-line-bottom text-dark-gray">@partnershipEmails[i]</a>
+							@Html.Raw(partnershipEmails[i].EmailToImageTag("tw:h-[18px] tw:w-auto", "#1f2937", 17))
 							if(i < partnershipEmails.Count - 1)
 							{
 								<br>
@@ -70,7 +70,7 @@
 						<span class="fs-18 alt-font fw-600 d-block text-dark-gray mb-5px">@Umbraco.GetDictionaryValue("ContactPage.SalesLabel")</span>
 						@for(var i = 0; i < salesEmails.Count; i++)
 						{
-							<a href="mailto:@salesEmails[i]" class="text-decoration-line-bottom text-dark-gray">@salesEmails[i]</a>
+							@Html.Raw(salesEmails[i].EmailToImageTag("tw:h-[18px] tw:w-auto", "#1f2937", 17))
 							if(i < salesEmails.Count - 1)
 							{
 								<br>
@@ -81,7 +81,7 @@
 						<span class="fs-18 alt-font fw-600 d-block text-dark-gray mb-5px">@Umbraco.GetDictionaryValue("ContactPage.MarketingLabel")</span>
 						@for(var i = 0; i < marketingEmails.Count; i++)
 						{
-							<a href="mailto:@marketingEmails[i]" class="text-decoration-line-bottom text-dark-gray">@marketingEmails[i]</a>
+							@Html.Raw(marketingEmails[i].EmailToImageTag("tw:h-[18px] tw:w-auto", "#1f2937", 17))
 							if(i < marketingEmails.Count - 1)
 							{
 								<br>
@@ -94,7 +94,7 @@
 						<span class="fs-18 alt-font fw-600 d-block text-dark-gray mb-5px">@Umbraco.GetDictionaryValue("ContactPage.WebshopSupportLabel")</span>
 						@for(var i = 0; i < supportEmails.Count; i++)
 						{
-							<a href="mailto:@supportEmails[i]" class="text-decoration-line-bottom text-dark-gray">@supportEmails[i]</a>
+							@Html.Raw(supportEmails[i].EmailToImageTag("tw:h-[18px] tw:w-auto", "#1f2937", 17))
 							if(i < supportEmails.Count - 1)
 							{
 								<br>

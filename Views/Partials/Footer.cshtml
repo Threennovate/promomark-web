@@ -43,7 +43,7 @@
             <div class="col-6 col-lg-3 col-md-3">
                 <span class="alt-font fs-18 fw-600 d-block text-dark-gray mb-10px">@Umbraco.GetDictionaryValue("Footer.ContactLabel")</span>
                 <span class="d-block lh-normal">@Umbraco.GetDictionaryValue("Footer.EmailLabel"):</span>
-                <a href="mailto:@homePage.ContactEmail" class="text-dark-gray text-decoration-line-bottom lh-22 d-inline-block mb-20px">@homePage.ContactEmail</a>
+                <span class="d-inline-block mb-20px">@Html.Raw(homePage.ContactEmail.EmailToImageTag("tw:h-[20px] tw:w-auto", "#1f2937", 18))</span>
                 @if(!string.IsNullOrEmpty(homePage.ContactPhone))
                 {
                     <span class="d-block lh-normal">@Umbraco.GetDictionaryValue("Footer.PhoneLabel"):</span>

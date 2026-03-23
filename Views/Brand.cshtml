@@ -1,4 +1,5 @@
 ﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@using PromomarkWeb.Helpers;
 @inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<Brand>
 @{
 	Layout = "Master.cshtml";
@@ -66,7 +67,7 @@
 						</div>
 						<div class="feature-box-content last-paragraph-no-margin">
 							<span class="d-block text-dark-gray">@Umbraco.GetDictionaryValue("BrandPage.QuestionsLabel")</span>
-							<a href="mailto:@homePage.ContactEmail" class="text-dark-gray fs-20 fw-700">@homePage.ContactEmail</a>
+							<span class="d-block fs-20 fw-700">@Html.Raw(homePage.ContactEmail.EmailToImageTag("tw:h-[22px] tw:w-auto", "#1f2937", 20))</span>
 						</div>
 					</div>
 				</div>
