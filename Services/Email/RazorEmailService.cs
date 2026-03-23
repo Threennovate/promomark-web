@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Options;
 
-namespace PromomaxWeb.Services.Email;
+namespace PromomarkWeb.Services.Email;
 
 public class RazorEmailService : IEmailService
 {

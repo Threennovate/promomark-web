@@ -11,12 +11,14 @@
   "author": "Threennovate",
   "license": "ISC",
   "devDependencies": {
-    "cssnano": "^6.0.1",
+    "autoprefixer": "^10.4.24",
+    "cssnano": "^6.1.2",
     "grunt": "^1.4.1",
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^8.0.0",
     "gulp-concat": "^2.6.1",
     "gulp-header": "^2.0.9",
+    "gulp-if": "^3.0.0",
     "gulp-less": "^5.0.0",
     "gulp-minify": "^3.1.0",
     "gulp-postcss": "^9.0.1",
@@ -30,7 +32,6 @@
   },
   "dependencies": {
     "browser-sync": "^2.29.3",
-    "gulp-minify-css": "^1.2.4",
     "gulp-update": "^0.0.2",
     "tailwindcss": "^4.0.0"
   }

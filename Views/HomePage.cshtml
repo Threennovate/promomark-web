@@ -1,7 +1,7 @@
 ﻿@using Umbraco.Cms.Web.Common.PublishedModels;
 @using PromomarkWeb.Helpers;
 @inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<HomePage>
-@inject Microsoft.Extensions.Options.IOptions<PromomaxWeb.Options.GoogleRecaptchaOptions> RecaptchaOptions
+@inject Microsoft.Extensions.Options.IOptions<PromomarkWeb.Options.GoogleRecaptchaOptions> RecaptchaOptions
 @{
 	Layout = "Master.cshtml";
 
@@ -24,15 +24,14 @@
                             <h1 class="fw-600">@Model.HeroTitle.RemoveOuterPTags()</h1>  
                             <div class="fs-20 opacity-8 mb-40px sm-mb-30px">@Model.HeroSubtitle.RemoveOuterPTags()</div>
                             <div class="lg-mb-8 md-mb-0">
-                                <a href="@brandsPage?.Url()" class="btn btn-white btn-extra-large btn-round-edge fw-700 btn-box-shadow me-35px">Istražite brendove</a>
-                                <a href="@contactPage?.Url()" class="text-center d-inline-flex sm-mt-20px rounded-circle video-icon-box video-icon-medium popup-vimeo">
-                                    <span class="video-icon bg-base-color me-10px">
-                                        <i class="m-0 fa-solid fa-comment text-white"></i>
-                                        <span class="video-icon-sonar">
-                                            <span class="video-icon-sonar-afr border border-2 border-color-base-color"></span>
-                                        </span>
-                                    </span>
-                                    <span class="text-white fs-20">Kontaktirajte nas</span>
+                                <a href="@brandsPage?.Url()" class="btn btn-white btn-extra-large btn-round-edge fw-700 btn-box-shadow me-35px">@Umbraco.GetDictionaryValue("HomePage.HeroBrandsCta")</a>
+                                
+                                <a href="@contactPage?.Url()" class="btn btn-link btn-hover-animation-switch btn-large text-white opacity-8 text-transform-none xs-mt-10">
+                                    <span>
+                                        <span class="btn-text fs-18">@Umbraco.GetDictionaryValue("HomePage.HeroContactCta")</span>
+                                        <span class="btn-icon"><i class="feather icon-feather-arrow-right"></i></span>
+                                        <span class="btn-icon"><i class="feather icon-feather-arrow-right"></i></span>
+                                    </span> 
                                 </a>
                             </div>
                         </div>
@@ -78,7 +77,7 @@
 <!-- start section --> 
 <section class="position-relative">
     <div class="container">
-        <img src="/images/demo-logistics-home-bg-01.jpg" class="position-absolute bottom-10px right-0px z-index-minus-1" data-bottom-top="transform: translateY(150px)" data-top-bottom="transform: translateY(-150px)" alt=""/>
+        <img src="/images/promomark_globe_01.webp" class="position-absolute bottom-10px right-0px z-index-minus-1" data-bottom-top="transform: translateY(150px)" data-top-bottom="transform: translateY(-150px)" alt=""/>
         <div class="row align-items-center justify-content-center">
             <div class="col-lg-6 col-md-10 md-mb-50px" data-anime='{ "translate": [0, 0], "opacity": [0,1], "duration": 600, "delay": 0, "staggervalue": 300, "easing": "easeOutQuad" }'> 
                 <img src="@Model.AboutImage?.Url()" class="w-100" data-bottom-top="transform: translateY(-50px)" data-top-bottom="transform: translateY(50px)" alt="">
@@ -210,7 +209,7 @@
             <div class="col-12 text-center">
                 <!-- filter navigation -->
                 <ul class="portfolio-filter nav nav-tabs justify-content-center border-0 fw-500 alt-font pb-5">
-                    <li class="nav active"><a data-filter="*" href="#">Sve</a></li>
+                    <li class="nav active"><a data-filter="*" href="#">@Umbraco.GetDictionaryValue("HomePage.BrandsFilterAll")</a></li>
                     @foreach(var brandCategory in brandCategories)
                     {
                         <li class="nav"><a data-filter=".@brandCategory.Id" href="#">@brandCategory.Name</a></li>
@@ -263,7 +262,7 @@
 </section>
 <!-- end section -->
 <!-- start section -->
-<section class="cover-background big-section" style="background-image: url('/images/promomark_bg_02.jpeg')">
+<section class="cover-background big-section" style="background-image: url('/images/promomark_bg_02.webp')">
     <div class="opacity-extra-medium bg-dark-gray"></div>
     <div class="container position-relative">
         <div class="row justify-content-center">
@@ -278,7 +277,7 @@
                                 <i class="bi bi-envelope text-white icon-very-medium"></i>
                             </div>
                             <div class="feature-box-content last-paragraph-no-margin">
-                                <span class="text-white opacity-7 d-block">Preferirate direktan kontakt?</span>
+                                <span class="text-white opacity-7 d-block">@Umbraco.GetDictionaryValue("HomePage.ContactDirectLabel")</span>
                                 <span class="d-block fs-22 text-white"><a href="mailto:@Model.ContactEmail" class="text-white text-decoration-line-bottom">@Model.ContactEmail</a></span>
                             </div>
                         </div>
@@ -290,7 +289,7 @@
                 @if (TempData["contactSuccess"] as string == "true")
                 {
                     <div class="alert alert-success mb-20px" role="alert">
-                        Vaša poruka je poslana. Hvala!
+                        @Umbraco.GetDictionaryValue("HomePage.ContactSuccessMessage")
                     </div>
                 }
                 @{
@@ -303,21 +302,21 @@
                 {
                     @Html.AntiForgeryToken()
                     <input type="hidden" name="g-recaptcha-response" value="" />
-                    @Html.ValidationSummary(true, "Molimo ispravite označene pogreške.")
+                    @Html.ValidationSummary(true, Umbraco.GetDictionaryValue("HomePage.ContactValidationSummary"))
                     <div class="row row-cols-1 row-cols-md-2 justify-content-center">
                         <div class="col mb-30px">
-                            <input class="border-color-transparent-white-very-light bg-transparent placeholder-light form-control required" type="text" name="Name" placeholder="Ime i prezime*" value="@_valName" />
+                            <input class="border-color-transparent-white-very-light bg-transparent placeholder-light form-control required" type="text" name="Name" placeholder="@Umbraco.GetDictionaryValue("HomePage.ContactPlaceholderName")" value="@_valName" />
                             @Html.ValidationMessage("Name", null, new { @class = "text-danger" })
                         </div>
                         <div class="col mb-30px">
-                            <input class="border-color-transparent-white-very-light bg-transparent placeholder-light form-control required" type="email" name="Email" placeholder="Email*" value="@_valEmail" />
+                            <input class="border-color-transparent-white-very-light bg-transparent placeholder-light form-control required" type="email" name="Email" placeholder="@Umbraco.GetDictionaryValue("HomePage.ContactPlaceholderEmail")" value="@_valEmail" />
                             @Html.ValidationMessage("Email", null, new { @class = "text-danger" })
                         </div>
                         <div class="col-md-12">
-                            <textarea class="border-color-transparent-white-very-light bg-transparent placeholder-light form-control" cols="40" rows="4" name="Message" placeholder="Poruka">@_valMessage</textarea>
+                            <textarea class="border-color-transparent-white-very-light bg-transparent placeholder-light form-control" cols="40" rows="4" name="Message" placeholder="@Umbraco.GetDictionaryValue("HomePage.ContactPlaceholderMessage")">@_valMessage</textarea>
                             @Html.ValidationMessage("Message", null, new { @class = "text-danger" })
                             <input type="hidden" name="redirect" value="">
-                            <button class="btn btn-medium btn-white mt-30px btn-round-edge submit fw-700" type="submit" data-sitekey="@RecaptchaOptions.Value.SiteKey">Javite nam se</button>
+                            <button class="btn btn-medium btn-white mt-30px btn-round-edge submit fw-700" type="submit" data-sitekey="@RecaptchaOptions.Value.SiteKey">@Umbraco.GetDictionaryValue("HomePage.ContactSubmitButton")</button>
                             <div class="form-results mt-20px d-none"></div>
                         </div>
                     </div>

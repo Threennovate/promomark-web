@@ -1,11 +1,13 @@
 ﻿@using Umbraco.Cms.Web.Common.PublishedModels;
 @using PromomarkWeb.Helpers;
 @inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<AboutUs>
-@inject Microsoft.Extensions.Options.IOptions<PromomaxWeb.Options.GoogleRecaptchaOptions> RecaptchaOptions
+@inject Microsoft.Extensions.Options.IOptions<PromomarkWeb.Options.GoogleRecaptchaOptions> RecaptchaOptions
 @{
 	Layout = "Master.cshtml";
 
 	var homePage = Model.AncestorOrSelf<HomePage>();
+
+	var pageTitle = !string.IsNullOrEmpty(Model.PageTitle) ? Model.PageTitle : Model.Name;
 }
 
 <!-- start section -->
@@ -14,7 +16,7 @@
 		<div class="row">
 			<div class="col-12 p-0 position-relative">
 				<img src="@Model.TitleImage?.GetCropUrl("titleImage")" alt="" class="w-100">
-				<div class="alt-font fw-600 fs-350 lg-fs-275 md-fs-250 sm-fs-200 xs-fs-140 ls-minus-5px xs-ls-minus-2px position-absolute right-minus-50px lg-right-minus-0px bottom-minus-80px md-bottom-minus-60px xs-bottom-minus-40px text-white text-outline text-outline-width-3px" data-bottom-top="transform: translate3d(80px, 0px, 0px);" data-top-bottom="transform: translate3d(-280px, 0px, 0px);">@Model.PageTitle</div>
+				<div class="alt-font fw-600 fs-350 lg-fs-275 md-fs-250 sm-fs-200 xs-fs-140 ls-minus-5px xs-ls-minus-2px position-absolute right-minus-50px lg-right-minus-0px bottom-minus-80px md-bottom-minus-60px xs-bottom-minus-40px text-white text-outline text-outline-width-3px" data-bottom-top="transform: translate3d(80px, 0px, 0px);" data-top-bottom="transform: translate3d(-280px, 0px, 0px);">@pageTitle</div>
 			</div>
 		</div>
 	</div>
@@ -52,7 +54,7 @@
 						<i class="line-icon-Glass-Water icon-double-large text-base-color mb-20px"></i>
 					</div>
 					<div class="feature-box-content last-paragraph-no-margin">
-						<span class="d-inline-block fw-700 text-dark-gray mb-5px fs-19">Filtracija vode</span>
+						<span class="d-inline-block fw-700 text-dark-gray mb-5px fs-19">@Umbraco.GetDictionaryValue("AboutUs.FeatureWaterFiltration")</span>
 					</div>
 				</div>
 			</div>
@@ -64,7 +66,7 @@
 						<i class="line-icon-Apple icon-double-large text-base-color mb-20px"></i>
 					</div>
 					<div class="feature-box-content last-paragraph-no-margin">
-						<span class="d-inline-block fw-700 text-dark-gray mb-5px fs-19">Zdrava prehrana</span>
+						<span class="d-inline-block fw-700 text-dark-gray mb-5px fs-19">@Umbraco.GetDictionaryValue("AboutUs.FeatureHealthyFood")</span>
 					</div>
 				</div>
 			</div>
@@ -76,7 +78,7 @@
 						<i class="line-icon-Eyebrow-2 icon-double-large text-base-color mb-20px"></i>
 					</div>
 					<div class="feature-box-content last-paragraph-no-margin">
-						<span class="d-inline-block fw-700 text-dark-gray mb-5px fs-19">Kozmetika</span>
+						<span class="d-inline-block fw-700 text-dark-gray mb-5px fs-19">@Umbraco.GetDictionaryValue("AboutUs.FeatureCosmetics")</span>
 					</div>
 				</div>
 			</div>
@@ -88,7 +90,7 @@
 						<i class="line-icon-Magic-Wand icon-double-large text-base-color mb-20px"></i>
 					</div>
 					<div class="feature-box-content last-paragraph-no-margin">
-						<span class="d-inline-block fw-700 text-dark-gray mb-5px fs-19">Beauty asortiman</span>
+						<span class="d-inline-block fw-700 text-dark-gray mb-5px fs-19">@Umbraco.GetDictionaryValue("AboutUs.FeatureBeautyRange")</span>
 					</div>
 				</div>
 			</div>
@@ -100,7 +102,7 @@
 						<i class="line-icon-Bow-3 icon-double-large text-base-color mb-20px"></i>
 					</div>
 					<div class="feature-box-content last-paragraph-no-margin">
-						<span class="d-inline-block fw-700 text-dark-gray mb-5px fs-19">Modni dodaci za kosu</span>
+						<span class="d-inline-block fw-700 text-dark-gray mb-5px fs-19">@Umbraco.GetDictionaryValue("AboutUs.FeatureHairAccessories")</span>
 					</div>
 				</div>
 			</div>
@@ -112,7 +114,7 @@
 						<i class="line-icon-Luggage-2 icon-double-large text-base-color mb-20px"></i>
 					</div>
 					<div class="feature-box-content last-paragraph-no-margin">
-						<span class="d-inline-block fw-700 text-dark-gray mb-5px fs-19">Putni asortiman</span>
+						<span class="d-inline-block fw-700 text-dark-gray mb-5px fs-19">@Umbraco.GetDictionaryValue("AboutUs.FeatureTravelRange")</span>
 					</div>
 				</div>
 			</div>

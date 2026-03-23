@@ -1,11 +1,13 @@
-using PromomaxWeb.Options;
+using PromomarkWeb.Options;
+using PromomarkWeb.Configuration;
 using Umbraco.Community.BlockPreview.Extensions;
+using Microsoft.Extensions.Options;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 // Register application services
-builder.Services.Configure<PromomaxWeb.Services.Email.SmtpOptions>(builder.Configuration.GetSection("Umbraco:CMS:Global:Smtp"));
-builder.Services.AddScoped<PromomaxWeb.Services.Email.IEmailService, PromomaxWeb.Services.Email.RazorEmailService>();
+builder.Services.Configure<PromomarkWeb.Services.Email.SmtpOptions>(builder.Configuration.GetSection("Umbraco:CMS:Global:Smtp"));
+builder.Services.AddScoped<PromomarkWeb.Services.Email.IEmailService, PromomarkWeb.Services.Email.RazorEmailService>();
 builder.Services.Configure<GoogleRecaptchaOptions>(builder.Configuration.GetSection("GoogleRecaptcha"));
 builder.Services.AddHttpClient();
 
@@ -25,6 +27,8 @@ builder.CreateUmbracoBuilder()
        };
    })
     .Build();
+
+builder.Services.AddTransient<IConfigureOptions<StaticFileOptions>, ConfigureStaticFileOptions>();
 
 WebApplication app = builder.Build();
 

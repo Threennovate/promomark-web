@@ -1,9 +1,10 @@
 @using Umbraco.Cms.Web.Common.PublishedModels;
 @using PromomarkWeb.Helpers;
 @inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<ContactPage>
-@inject Microsoft.Extensions.Options.IOptions<PromomaxWeb.Options.GoogleRecaptchaOptions> RecaptchaOptions
+@inject Microsoft.Extensions.Options.IOptions<PromomarkWeb.Options.GoogleRecaptchaOptions> RecaptchaOptions
 @{
 	Layout = "Master.cshtml";
+	var pageTitle = !string.IsNullOrEmpty(Model.PageTitle) ? Model.PageTitle : Model.Name;
 
 	var homePage = Model.AncestorOrSelf<HomePage>();
 
@@ -33,7 +34,7 @@
 		<div class="row">
 			<div class="col-12 p-0 position-relative">
 				<img src="@Model.TitleImage.GetCropUrl("titleImage")" alt="" class="w-100">
-				<div class="alt-font fw-600 fs-350 lg-fs-275 md-fs-250 sm-fs-200 xs-fs-140 ls-minus-5px xs-ls-minus-2px position-absolute right-minus-50px lg-right-minus-0px bottom-minus-80px md-bottom-minus-60px xs-bottom-minus-40px text-white text-outline text-outline-width-3px" data-bottom-top="transform: translate3d(80px, 0px, 0px);" data-top-bottom="transform: translate3d(-280px, 0px, 0px);">Kontakt</div>
+				<div class="alt-font fw-600 fs-350 lg-fs-275 md-fs-250 sm-fs-200 xs-fs-140 ls-minus-5px xs-ls-minus-2px position-absolute right-minus-50px lg-right-minus-0px bottom-minus-80px md-bottom-minus-60px xs-bottom-minus-40px text-white text-outline text-outline-width-3px" data-bottom-top="transform: translate3d(80px, 0px, 0px);" data-top-bottom="transform: translate3d(-280px, 0px, 0px);">@pageTitle</div>
 			</div>
 		</div>
 	</div>
@@ -52,7 +53,7 @@
 					</div>
 					<div class="col">
 						<span class="fs-18 alt-font fw-600 d-block text-dark-gray mb-5px">@Umbraco.GetDictionaryValue("ContactPage.PartnerLabel")</span>
-						<span>Prilagođena rješenja za sve partnere.</span>
+						<span>@Umbraco.GetDictionaryValue("ContactPage.PartnerText")</span>
 						<br>
 						@for(var i = 0; i < partnershipEmails.Count; i++)
 						{

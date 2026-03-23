@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json;
-using PromomaxWeb.Dtos;
-using PromomaxWeb.Dtos.Emails;
-using PromomaxWeb.Options;
-using PromomaxWeb.Services.Email;
+using PromomarkWeb.Dtos;
+using PromomarkWeb.Dtos.Emails;
+using PromomarkWeb.Options;
+using PromomarkWeb.Services.Email;
 using Microsoft.Extensions.Options;
 using Umbraco.Cms.Core.Cache;
 using Umbraco.Cms.Core.Logging;
@@ -16,7 +16,7 @@ using Umbraco.Cms.Web.Website.Controllers;
 using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Web.Common.PublishedModels;
 
-namespace PromomaxWeb.Controllers;
+namespace PromomarkWeb.Controllers;
 
 public class ContactSurfaceController(
     IUmbracoContextAccessor umbracoContextAccessor,

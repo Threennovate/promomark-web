@@ -1,4 +1,4 @@
-namespace PromomaxWeb.Dtos.Emails;
+namespace PromomarkWeb.Dtos.Emails;
 
 public class ContactEmailModel
 {

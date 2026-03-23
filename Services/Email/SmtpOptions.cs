@@ -1,4 +1,4 @@
-namespace PromomaxWeb.Services.Email;
+namespace PromomarkWeb.Services.Email;
 
 public class SmtpOptions
 {

@@ -1,4 +1,4 @@
-namespace PromomaxWeb.Dtos;
+namespace PromomarkWeb.Dtos;
 
 public class ContactFormDto
 {

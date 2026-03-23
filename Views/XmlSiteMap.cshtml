@@ -1,0 +1,174 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<ContentModels.XmlSiteMap>
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor _httpContextAccessor;
+@{
+	Layout = null;
+	Context.Response.ContentType = "text/xml";
+
+	IPublishedContent siteHomePage = Model.Root();
+
+	// Get the value from the excludedDocumentTypes property as a 'string'
+	string excludedDocumentTypeList = Model.Value<string>("excludedDocumentTypes");
+	// Separate the values into separate Document Types and add them to an 'array'
+	string[] excludedDocumentTypes = (!String.IsNullOrEmpty(excludedDocumentTypeList)) ? excludedDocumentTypeList.Split(new
+	char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(p => p.Trim()).ToArray() : new string[] { };
+}
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" 
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 
+                            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+@{
+	if (ShouldIncludeInSiteMap(siteHomePage))
+	{
+		RenderSiteMapUrlEntriesForAllCultures(siteHomePage);
+	}
+
+	RenderSiteMapUrlEntriesForChildren(siteHomePage);
+}
+</urlset>
+
+@{
+	bool ShouldIncludeInSiteMap(IPublishedContent node)
+	{
+		if (excludedDocumentTypes.Contains(node.ContentType.Alias))
+		{
+			return false;
+		}
+
+		return !node.Value<bool>("hideFromXmlSiteMap");
+	}
+
+	string GetChangeFrequency(IPublishedContent node)
+	{
+		// Your existing logic to determine change frequency
+		var changeFreq = node.Value("searchEngineChangeFrequency",
+		fallback: Fallback.To(Fallback.Ancestors, Fallback.DefaultValue),
+		defaultValue: "monthly");
+
+		@* if (node is BlogPost)
+		{
+			if (!node.HasValue("searchEngineChangeFrequency"))
+			{
+				changeFreq = "monthly";
+			}
+		}
+		if (node is BlogCategory)
+		{
+			if (!node.HasValue("searchEngineChangeFrequency"))
+			{
+				changeFreq = "daily";
+			}
+			// Other conditions as needed
+		} *@
+
+		return changeFreq;
+	}
+
+	string GetPriority(IPublishedContent node)
+	{
+		// Your existing logic to determine priority
+		var priority = node.HasValue("searchEngineRelativePriority")
+		? node.Value<decimal>("searchEngineRelativePriority").ToString(System.Globalization.CultureInfo.InvariantCulture)
+		: "0.5";
+
+		@* if (node is BlogPost)
+		{
+			if (!node.HasValue("searchEngineRelativePriority"))
+			{
+				priority = "0.5";
+			}
+		}
+		if (node is BlogCategory)
+		{
+			if (!node.HasValue("searchEngineRelativePriority"))
+			{
+				priority = "0.8";
+			}
+		} *@
+
+		return priority;
+	}
+
+	void RenderSiteMapUrlEntry(IPublishedContent node, string culture)
+	{
+		// The change frequency is recursive and should 'fallback to ancestor' when no value is given.
+		var changeFreq = node.Value("searchEngineChangeFrequency",
+		fallback: Fallback.To(Fallback.Ancestors, Fallback.DefaultValue),
+		defaultValue: "weekly");
+
+		var priority = node.HasValue("searchEngineRelativePriority") ?
+		node.Value<decimal>("searchEngineRelativePriority").ToString(System.Globalization.CultureInfo.InvariantCulture) :
+		"0.5";
+
+		@* if (node is BlogPost)
+		{
+			if (!node.HasValue("searchEngineChangeFrequency"))
+			{
+				changeFreq = "monthly";
+			}
+		}
+		if (node is BlogCategory)
+		{
+			if (!node.HasValue("searchEngineChangeFrequency"))
+			{
+				changeFreq = "daily";
+			}
+			if (!node.HasValue("searchEngineRelativePriority"))
+			{
+				priority = "0.8";
+			}
+		} *@
+
+		var cultures = node.Cultures;
+		var hasMultipleCultures = cultures.Count > 1;
+		var defaultCulture = cultures.FirstOrDefault(c => string.IsNullOrEmpty(c.Value.UrlSegment)).Key
+			?? (cultures.ContainsKey("hr-HR") ? "hr-HR" : cultures.Keys.First());
+
+		<url>
+			<loc>@node.Url(culture: culture, mode: UrlMode.Absolute)</loc>
+			@if (hasMultipleCultures)
+			{
+				foreach (var alt in cultures)
+				{
+					if (!string.IsNullOrEmpty(alt.Value.UrlSegment))
+					{
+						var hreflang = alt.Key.ToLowerInvariant();
+						<xhtml:link rel="alternate" hreflang="@hreflang" href="@node.Url(culture: alt.Key, mode: UrlMode.Absolute)" />
+					}
+				}
+				<xhtml:link rel="alternate" hreflang="x-default" href="@node.Url(culture: defaultCulture, mode: UrlMode.Absolute)" />
+			}
+			<lastmod>@(string.Format("{0:s}+01:00", node.UpdateDate))</lastmod>
+			<changefreq>@changeFreq</changefreq>
+			<priority>@priority</priority>
+		</url>
+	}
+
+	void RenderSiteMapUrlEntriesForAllCultures(IPublishedContent node)
+	{
+		var cultures = node.Cultures;
+		foreach (var culture in cultures)
+		{
+			if (!string.IsNullOrEmpty(culture.Value.UrlSegment))
+			{
+				RenderSiteMapUrlEntry(node, culture.Key);
+			}
+		}
+	}
+
+	void RenderSiteMapUrlEntriesForChildren(IPublishedContent parentPage)
+	{
+		foreach (var page in parentPage.Children.Where(x => ShouldIncludeInSiteMap(x)))
+		{
+			RenderSiteMapUrlEntriesForAllCultures(page);
+
+			if (page.Children.Any())
+			{
+				RenderSiteMapUrlEntriesForChildren(page);
+			}
+		}
+	}
+}

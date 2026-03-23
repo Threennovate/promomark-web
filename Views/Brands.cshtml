@@ -8,7 +8,7 @@
     var titleImageUrl = Model.TitleImage?.GetCropUrl("titleImage");
     if(string.IsNullOrEmpty(titleImageUrl))
     {
-        titleImageUrl = "/images/promomark_bg_02.jpeg";
+        titleImageUrl = "/images/promomark_bg_02.webp";
     }
 }
 
@@ -34,7 +34,7 @@
                 <div class="col-12 text-center">
                     <!-- filter navigation -->
                     <ul class="portfolio-filter nav nav-tabs justify-content-center border-0 fw-500 alt-font pb-5">
-                        <li class="nav active"><a data-filter="*" href="#">Sve</a></li>
+                        <li class="nav active"><a data-filter="*" href="#">@Umbraco.GetDictionaryValue("HomePage.BrandsFilterAll")</a></li>
                         @foreach(var brandCategory in brandCategories)
                         {
                             <li class="nav"><a data-filter=".@brandCategory.Id" href="#">@brandCategory.Name</a></li>

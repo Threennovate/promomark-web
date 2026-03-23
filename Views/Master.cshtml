@@ -1,11 +1,21 @@
 ﻿@using Umbraco.Cms.Web.Common.PublishedModels;
 @inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<Master>
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor _httpContextAccessor;
 @{
 	Layout = null;
 
     var pageTitle = !string.IsNullOrWhiteSpace(Model.PageTitle) ? Model.PageTitle : Model.Name;
     var homePage = Model.AncestorOrSelf<HomePage>();
-    var canonicalUrl = $"https://promomark.hr{Context.Request.Path}";
+    
+    var currentCulture = System.Globalization.CultureInfo.CurrentCulture.Name;
+    var urlRequest = _httpContextAccessor.HttpContext.Request;
+    var domain = urlRequest.Host.Value;
+    var baseUrl = urlRequest.Scheme + "://" + domain;
+    var canonicalUrl = Model.Url(culture: currentCulture, mode: UrlMode.Absolute);
+    if (string.IsNullOrWhiteSpace(canonicalUrl))
+    {
+        canonicalUrl = baseUrl + urlRequest.Path + urlRequest.QueryString;
+    }
     
     Umbraco.Cms.Core.Models.MediaWithCrops metaImage = Model.MetaImage;
     if(metaImage == null)
@@ -21,7 +31,7 @@
 }
 
 <!doctype html>
-<html class="no-js" lang="hr">
+<html class="no-js" lang="@currentCulture">
     <head>
         <title>Promomark | @pageTitle</title>
         <meta charset="utf-8">
@@ -30,6 +40,18 @@
         <meta name="viewport" content="width=device-width,initial-scale=1.0" />
         <meta name="description" content="@metaDescription">
         <link rel="canonical" href="@canonicalUrl" />
+        @if(Model.Cultures?.Any() == true)
+        {
+            foreach (var culture in Model.Cultures)
+            {
+                var cultureUrl = Model.Url(culture.Key, UrlMode.Absolute);
+                if(!string.IsNullOrWhiteSpace(cultureUrl))
+                {
+                    <link rel="alternate" hreflang="@culture.Value.Culture" href="@cultureUrl" />
+                }
+            }
+            <link rel="alternate" hreflang="x-default" href="@canonicalUrl" />
+        }
         @if(metaImage != null)
         {
             <meta property="og:image" content="@metaImage.GetCropUrl(1200, 628, urlMode: UrlMode.Absolute)">
@@ -38,25 +60,54 @@
         } 
         <!-- favicon icon -->
 
-        <link rel="icon" type="image/png" href="/favicon/favicon-96x96.png?v=1" sizes="96x96" />
-        <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg?v=1" />
-        <link rel="shortcut icon" href="/favicon/favicon.ico?v=1" />
-        <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png?v=1" />
+        <link rel="icon" type="image/png" href="/favicon/favicon-96x96.png?" asp-append-version="true" sizes="96x96" />
+        <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg?" asp-append-version="true" />
+        <link rel="shortcut icon" href="/favicon/favicon.ico" asp-append-version="true" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png?" asp-append-version="true" />
         <meta name="apple-mobile-web-app-title" content="Promomark" />
-        <link rel="manifest" href="/favicon/site.webmanifest?v=1" />
+        <link rel="manifest" href="/favicon/site.webmanifest" asp-append-version="true" />
 
         <!-- google fonts preconnect -->
         <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        
-        <link rel="stylesheet" type="text/css" href="~/css/vendors.min.css">
-        <link rel="stylesheet" type="text/css" href="~/css/icon.min.css">
-        <link rel="stylesheet" type="text/css" href="~/css/style.min.css">
-        <link rel="stylesheet" type="text/css" href="~/css/responsive.min.css">
-        <link rel="stylesheet" type="text/css" href="~/css/umbraco-blockgridlayout.css">
-        <link rel="stylesheet" type="text/css" href="~/css/custom.css?v=3">
+        <link href="https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
-        <link rel="stylesheet" type="text/css" href="~/css/output.css?v=3">
+        <script type="application/ld+json">
+            {
+                "@@context": "https://schema.org",
+                "@@type": "WebSite",
+                "url": "@baseUrl",
+                "name": "Promomark",
+                "description": "@metaDescription",
+                "publisher": {
+                    "@@type": "Organization",
+                    "name": "Promomark",
+                    "logo": {
+                    "@@type": "ImageObject",
+                    "url": "@baseUrl/images/logo/promomark-logo.svg"
+                    }
+                }
+            }
+        </script>
+        <script type="application/ld+json">
+            {
+                "@@context": "https://schema.org",
+                "@@type": "Organization",
+                "url": "@baseUrl",
+                "name": "Promomark",
+                "legalName": "Promomark d.o.o.",
+                "description": "@metaDescription",
+                "logo": {
+                    "@@type": "ImageObject",
+                    "url": "@baseUrl/images/logo/promomark-logo.svg"
+                }
+            }
+        </script>
+        
+        <!-- Preload the main script for better performance -->
+        <link rel="preload" href="~/scripts/site.min.js" as="script" asp-append-version="true">
+        
+        <link rel="stylesheet" href="~/css/site.min.css?" asp-append-version="true"/>
     </head>
    <body data-mobile-nav-style="classic">
         
@@ -91,8 +142,6 @@
 
         <!-- javascript libraries -->
 			
-        <script type="text/javascript" src="~/scripts/jquery.js"></script>
-        <script type="text/javascript" src="~/scripts/vendors.min.js"></script>
-        <script type="text/javascript" src="~/scripts/main.js"></script>
+        <script type="text/javascript" src="~/scripts/site.min.js" asp-append-version="true" defer></script>
     </body>
 </html>

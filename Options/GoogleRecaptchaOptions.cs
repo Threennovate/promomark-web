@@ -1,4 +1,4 @@
-namespace PromomaxWeb.Options
+namespace PromomarkWeb.Options
 {
     public class GoogleRecaptchaOptions
     {

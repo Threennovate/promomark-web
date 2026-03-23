@@ -5,8 +5,14 @@
 	var homePage = Model.AncestorOrSelf<HomePage>();
 
     var brandsPage = homePage.Children<Brands>().FirstOrDefault();
+    var contactPage = homePage.Children<ContactPage>().FirstOrDefault();
 
-    var otherPages = homePage.Children<Master>().Where(x => x.IsVisible()).ToList(); 
+    var otherPages = homePage.Children<Master>().Where(x => x.IsVisible()).ToList();
+
+    var cultures = Model.Cultures;
+
+    var currentCulture = System.Globalization.CultureInfo.CurrentCulture.Name;
+    var currentUrl = Context.Request.Path + Context.Request.QueryString;
 }
 <!-- start header -->
 <header>
@@ -21,6 +27,23 @@
                 </a>
             </div>
             <div class="col-auto menu-order left-nav ps-60px lg-ps-20px">
+                <div class="header-language-switcher me-15px d-flex d-xl-none">
+                    @foreach (var culture in cultures)
+                    {
+                        if (!string.IsNullOrEmpty(culture.Value.UrlSegment))
+                        {
+                            <a href="@Model.Url(culture.Key)"
+                                class="language-link text-dark-gray @(currentCulture.ToLower() == culture.Key.ToLower() ?"active" : "")"
+                                hreflang="@culture.Value.Culture">
+                                @(culture.Value.Culture.StartsWith("hr") ? "HR" : "EN")
+                            </a>
+                            @if (culture.Key != cultures.Last().Key)
+                            {
+                                <span class="language-separator">|</span>
+                            }
+                        }
+                    }
+                </div>
                 <button class="navbar-toggler float-start" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-label="Toggle navigation">
                     <span class="navbar-toggler-line"></span>
                     <span class="navbar-toggler-line"></span>
@@ -65,21 +88,31 @@
                     </ul>
                 </div>
             </div>
-            <div class="col-auto ms-auto ps-lg-0 d-none d-sm-flex"> 
-                @* <div class="d-none d-xl-flex me-25px">
-                    <div class="d-flex align-items-center widget-text fw-600 alt-font"><a href="tel:@homePage.ContactPhone.Replace(" ", "")" class="d-inline-block"><span class="d-inline-block align-middle me-10px bg-base-color-transparent h-45px w-45px text-center rounded-circle fs-16 lh-46 text-base-color"><i class="feather icon-feather-phone-outgoing"></i></span><span class="d-none d-xxl-inline-block">@homePage.ContactPhone</span></a></div>
-                </div>
-                <div class="header-icon">
-                    <div class="header-button">
-                        <a href="@projectsPage?.Url()" class="btn btn-base-color btn-small btn-round-edge btn-hover-animation-switch">
-                            <span> 
-                                <span class="btn-text">Pogledajte projekte</span> 
-                                <span class="btn-icon"><i class="feather icon-feather-arrow-right icon-very-small"></i></span>
-                                <span class="btn-icon"><i class="feather icon-feather-arrow-right icon-very-small"></i></span>
-                            </span>
-                        </a>
+            <div class="col-auto ms-auto ps-lg-0 d-none d-sm-flex">
+
+                @if (cultures.Count > 1)
+                {
+                    <div class="header-language-switcher me-20px">
+                        @foreach (var culture in cultures)
+                        {
+                            if (!string.IsNullOrEmpty(culture.Value.UrlSegment))
+                            {
+                                <a href="@Model.Url(culture.Key)"
+                                    class="language-link text-dark-gray @(currentCulture.ToLower() == culture.Key.ToLower() ?"active" : "")"
+                                    hreflang="@culture.Value.Culture">
+                                    @(culture.Value.Culture.StartsWith("hr") ? "HR" : "EN")
+                                </a>
+                                @if (culture.Key != cultures.Last().Key)
+                                {
+                                    <span class="language-separator">|</span>
+                                }
+                            }
+                        }
                     </div>
-                </div> *@
+                }
+                <div class="header-icon">
+                    <div class="header-button"><a href="@contactPage?.Url()" class="btn btn-very-small btn-dark-gray btn-box-shadow btn-round-edge">@Umbraco.GetDictionaryValue("Header.ContactButtonText")</a></div>
+                </div> 
             </div>
         </div>
     </nav>
