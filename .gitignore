@@ -1,8 +1,9 @@
 node_modules
 /bin
 /obj
-/umbraco
 wwwroot/.DS_Store
 .DS_Store
 
 /artifacts/publish/
+/umbraco/Data
+/umbraco/Logs
